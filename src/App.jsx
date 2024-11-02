@@ -21,7 +21,7 @@ function App() {
           <div className="pb-8" style={{ color: "#10B981" }}>
             <LoaderCircle className="animate-spin " size={48} />
           </div>
-          <p className="font-sans text-3xl text-name-color font-bold pb-8 ">
+          <p className="font-sans text-xl text-name-color font-bold pb-8 ">
             Welcome to my personal website
           </p>
           <p>Mobile version coming soon</p>
