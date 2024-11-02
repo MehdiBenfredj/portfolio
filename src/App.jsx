@@ -26,6 +26,8 @@ function App() {
           </p>
           <p>Mobile version coming soon</p>
           <p className="pt-8">Meanwhile, please browse on desktop!</p>
+          <p className="pt-8">contact@mehdibenfredj.com</p>
+          <Socials></Socials>
         </div>
       )}
     </div>
