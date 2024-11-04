@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 import { sendEmail } from "../service/emailSender";
 
 export default function Contact() {
-  const nameInputRef = useRef(null);
-  const emailInputRef = useRef(null);
-  const messageInputRef = useRef(null);
+  const nameInputRef = useRef();
+  const emailInputRef = useRef();
+  const messageInputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -4,6 +4,6 @@
 
 @layer base {
 	p {
-	  @apply text-gray-400 text-lg leading-relaxed ;
+	  @apply text-gray-400 leading-relaxed ;
 	}
   }

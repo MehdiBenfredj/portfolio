@@ -1,18 +1,15 @@
 import React from "react";
 import photo from "../assets/photoBNP.jpeg";
-import { ChevronRight } from "lucide-react";
 
 export default function About() {
   return (
-    <div className=" flex flex-col items-center w-screen px-56">
+    <div className=" flex flex-col items-center w-screen px-12 xl:px-56 lg:py-44">
       <div>
-        <div className="flex ">
-          <p className="pb-8 text-emerald-500 font-mono">About Me</p>
-        </div>
+        <p className="pb-8 text-emerald-500 font-mono">About Me</p>
 
-        <div className="flex">
+        <div class="flex gap-4 flex-col items-center md:items-start md:flex-row ">
           <div>
-            <p>
+            <p className="text-sm md:text-base">
               Hello! My name is Mehdi BENFREDJ and I'm passionate about crafting
               robust software solutions. My journey into software engineering
               began in 2019 when I first dove into algorithms and data
@@ -25,34 +22,84 @@ export default function About() {
               the finance sector. Here are a few technologies I've been working
               with recently:
             </p>
-            <ul className="py-8 grid grid-cols-2">
-              <li className="flex items-center pt-2">
-                <ChevronRight color="#10b981" />
-                <p className="font-mono">Java</p>
+            <ul class="py-8 grid grid-cols-2">
+              <li class="flex items-center pt-2">
+                <svg
+                  class="h-5 w-5 text-green-500 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p class="font-mono text-sm md:text-base">Java</p>
               </li>
-              <li className="flex items-center pt-2">
-                <ChevronRight color="#10b981" />
-                <p className="font-mono">C++</p>
+              <li class="flex items-center pt-2">
+                <svg
+                  class="h-5 w-5 text-green-500 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p class="font-mono text-sm md:text-base">C++</p>
               </li>
-              <li className="flex items-center pt-2">
-                <ChevronRight color="#10b981" />
-                <p className="font-mono">Python</p>
+              <li class="flex items-center pt-2">
+                <svg
+                  class="h-5 w-5 text-green-500 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p class="font-mono text-sm md:text-base">Python</p>
               </li>
-              <li className="flex items-center pt-2">
-                <ChevronRight color="#10b981" />
-                <p className="font-mono">JavaScript</p>
+              <li class="flex items-center pt-2">
+                <svg
+                  class="h-5 w-5 text-green-500 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p class="font-mono text-sm md:text-base">JavaScript</p>
               </li>
-              <li className="flex items-center pt-2">
-                <ChevronRight color="#10b981" />
-                <p className="font-mono">React</p>
+              <li class="flex items-center pt-2">
+                <svg
+                  class="h-5 w-5 text-green-500 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p class="font-mono text-sm md:text-base">React</p>
               </li>
             </ul>
             <p>And many more...</p>
           </div>
 
-          <div className="relative w-full min-w-56 max-h-fit ml-4">
-            <img src={photo} alt="Me" className="w-full block" />
-            <div className="absolute inset-0 max-l-full bg-vscode-blue/50 hover:bg-transparent"></div>
+          <div class="relative w-56 min-w-56">
+            <img src={photo} alt="Me" class="w-full block" />
+            <div class="absolute inset-0 max-l-full bg-vscode-blue/50 hover:bg-transparent"></div>
           </div>
         </div>
       </div>
