@@ -7,11 +7,11 @@ export default function Experience() {
   const [active, setActive] = useState(0);
 
   return (
-    <div className=" flex flex-col md:items-center w-full p-12 xl:px-56 lg:py-44">
-      <div>
-        <p className=" text-emerald-500 font-mono ">Where I've worked</p>
+    <div className=" flex flex-col w-full px-12 xl:px-56 lg:py-44">
+      <p className=" text-emerald-500 font-mono ">Where I've worked</p>
 
-        <div className="flex py-8 overflow-x-scroll md:flex-col">
+      <div className="flex flex-col mt-8 md:flex-row md:items-start ">
+        <div className="flex  overflow-x-scroll md:overflow-x-clip md:flex-col">
           {experiences.map((experience, index) => (
             <button key={index} onClick={() => setActive(index)}>
               <Employer

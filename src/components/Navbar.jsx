@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import logo from "./../assets/M.svg";
 import NavElement from "./NavElement";
 import { Link } from "react-router-dom";
-import { Menu, X } from 'lucide-react';
-
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +58,7 @@ export default function Navbar() {
           </div>
         </div>
         {/* Mobile Menu Button */}
-        <div className="hidden">
+        <div className="lg:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
@@ -71,6 +70,34 @@ export default function Navbar() {
             )}
           </button>
         </div>
+      </div>
+      {/* Routes */}
+      {/* Mobile Menu */}
+      <div className=" flex flex-col lg:hidden">
+        {isOpen && (
+          <div>
+            <NavElement
+              id="01"
+              title="About"
+              path="/about"
+              handleCloseMenu={setIsOpen}
+            ></NavElement>
+            <NavElement
+              id="02"
+              title="Experience"
+              path="/experience"
+            ></NavElement>
+            <NavElement id="03" title="Contact" path="contact"></NavElement>
+            <div>
+              <button
+                onClick={handleDownload}
+                className="px-3 pt-4 rounded-lg text-emerald-500 text-lg leading-relaxed font-mono hover:text-white transition-all"
+              >
+                Download my resume
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
