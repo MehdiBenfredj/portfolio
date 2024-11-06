@@ -1,6 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-
+import { motion } from "framer-motion"
 
 export default function Index() {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
@@ -30,7 +30,6 @@ export default function Index() {
             With a strong background in finance. Currently building counterparty
             risk calculation engine for a financial corporation in Paris.
           </p>
-          {isTabletOrMobile && <p className="pb-2 font-mono">Full mobile version coming soon</p>}
         </div>
       </div>
   );
