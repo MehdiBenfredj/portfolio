@@ -1,28 +1,33 @@
-import React from 'react'
+import React from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiLinkedin, FiInstagram, FiGithub } from "react-icons/fi";
 import { useMediaQuery } from "react-responsive";
 
-
 export default function Socials() {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-  const iconsSize = isTabletOrMobile ? '20' : '24';
+  const size = isTabletOrMobile ? "18" : "20";
+
+  const links = [
+    { href: "https://www.linkedin.com/in/mehdi-benfredj/", Icon: FiLinkedin },
+    { href: "https://x.com/BenfredjMehdi", Icon: FaXTwitter },
+    { href: "https://www.instagram.com/mehdi.bnfrdj/", Icon: FiInstagram },
+    { href: "https://github.com/MehdiBenfredj", Icon: FiGithub },
+  ];
 
   return (
-	<div className="fixed bottom-0 left-0 text-white flex flex-col items-center  md:pl-10">
-        <a href="https://www.linkedin.com/in/mehdi-benfredj/">
-          <FiLinkedin size={iconsSize} className="m-2 hover:fill-white transition ease-in-out hover:rotate-45" />
+    <div className="fixed bottom-0 left-0 flex flex-col items-center md:pl-10">
+      {links.map(({ href, Icon }) => (
+        <a
+          key={href}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          className="m-2 text-gray-500 hover:text-emerald-500 hover:-translate-y-1 transition-all duration-200"
+        >
+          <Icon size={size} />
         </a>
-        <a href="https://x.com/BenfredjMehdi">
-          <FaXTwitter size={iconsSize} className="m-2 hover:fill-white transition ease-in-out hover:rotate-45" />
-        </a>
-        <a href="https://www.instagram.com/mehdi.bnfrdj/">
-          <FiInstagram size={iconsSize} className="m-2 hover:fill-white transition ease-in-out hover:rotate-45" />
-        </a>
-        <a href="https://github.com/MehdiBenfredj">
-          <FiGithub size={iconsSize} className="m-2 hover:fill-white transition ease-in-out hover:rotate-45" />
-        </a>
-        <hr className="w-1 h-24 bg-white border-none"></hr>
-      </div>
-  )
+      ))}
+      <div className="w-px h-20 bg-gray-700 mt-2" />
+    </div>
+  );
 }

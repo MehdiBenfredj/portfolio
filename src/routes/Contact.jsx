@@ -1,6 +1,11 @@
 import React, { useRef } from "react";
 import { sendEmail } from "../service/emailSender";
 
+const inputClass =
+  "w-full bg-white/5 border border-gray-700 text-name-color text-sm rounded focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/40 p-3 placeholder-gray-600 transition-colors duration-200 font-mono";
+
+const labelClass = "block mb-2 text-xs font-mono text-gray-500 uppercase tracking-wider";
+
 export default function Contact() {
   const nameInputRef = useRef();
   const emailInputRef = useRef();
@@ -9,85 +14,72 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Perform registration logic here
     const name = nameInputRef.current.value;
     const email = emailInputRef.current.value;
     const message = messageInputRef.current.value;
 
     sendEmail(name, email, message);
 
-    // Reset input fields
     nameInputRef.current.value = "";
     emailInputRef.current.value = "";
     messageInputRef.current.value = "";
-
-    console.log(name + email + message);
   };
 
   return (
-    <div className="w-screen flex justify-center">
-      <div className="px-24">
-        <p className="text-3xl text-name-color font-bold">
-          Got ideas? We've got the skills. Let's team up.
+    <div className="w-screen flex justify-center px-12 lg:py-44">
+      <div className="w-full max-w-lg">
+        <p className="text-emerald-500 font-mono text-sm pb-4">Get in touch</p>
+        <p className="text-2xl lg:text-3xl text-name-color font-bold leading-snug">
+          Got ideas? Let's build something together.
         </p>
-        <p className="text-name-color py-4 font-bold font-mono">
-          Tell us more about yourself and what you've got in mind.
+        <p className="text-name-color/60 py-4 font-mono text-sm">
+          Tell me more about yourself and what you have in mind.
         </p>
-        <form className="flex flex-col py-8" onSubmit={handleSubmit}>
-          <div className="mb-5">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-name-color dark:text-white"
-            >
-              Your name
+        <form className="flex flex-col gap-5 pt-4" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name" className={labelClass}>
+              Name
             </label>
             <input
               type="text"
               id="name"
-              className="bg-gray-50/25 border border-name-color/50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Name"
+              className={inputClass}
+              placeholder="Your name"
               ref={nameInputRef}
               required
             />
           </div>
-          <div className="mb-5">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-name-color dark:text-white"
-            >
-              Your email
+          <div>
+            <label htmlFor="email" className={labelClass}>
+              Email
             </label>
             <input
               type="email"
               id="email"
-              className="bg-gray-50/25 border border-name-color/50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Email"
+              className={inputClass}
+              placeholder="your@email.com"
               ref={emailInputRef}
               required
             />
           </div>
-          <div className="mb-5">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-name-color dark:text-white"
-            >
-              Tell me more about the project...
+          <div>
+            <label htmlFor="project" className={labelClass}>
+              Message
             </label>
             <textarea
-              type="text"
               id="project"
-              className="h-40 bg-gray-50/25 border border-name-color/50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Message"
+              className={`${inputClass} h-36 resize-none`}
+              placeholder="Tell me about your project..."
               ref={messageInputRef}
               required
             />
           </div>
-          <div className="flex justify-center pt-8">
+          <div className="flex justify-center pt-2">
             <button
-              className="bg-vscode-blue rounded-md p-2 border-2 border-emerald-500 text-emerald-500 text-lg leading-relaxed font-mono shrink-0 hover:bg-emerald-500 hover:text-white"
+              className="px-8 py-2.5 border border-emerald-500 rounded text-emerald-500 font-mono text-sm hover:bg-emerald-500 hover:text-vscode-blue transition-all duration-200"
               type="submit"
             >
-              <div>commit</div>
+              commit
             </button>
           </div>
         </form>

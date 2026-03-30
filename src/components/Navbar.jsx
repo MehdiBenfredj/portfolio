@@ -29,73 +29,54 @@ export default function Navbar() {
   };
 
   return (
-    <div className="w-full p-4">
-      <div className="flex justify-between">
+    <div className="sticky top-0 z-50 w-full px-4 py-3 bg-vscode-blue/90 backdrop-blur-md border-b border-white/5">
+      <div className="flex justify-between items-center">
         {/* Logo */}
         <Link
           to={"/"}
-          className="flex-shrink-0 transition ease-in-out hover:rotate-90"
+          className="flex-shrink-0 transition-transform duration-300 ease-in-out hover:rotate-90"
         >
-          <img className="h-16 w-auto" src={logo} alt="Company Logo" />{" "}
+          <img className="h-14 w-auto" src={logo} alt="Logo" />
         </Link>
-        {/* Routes */}
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center">
-          <NavElement id="01" title="About" path="/about"></NavElement>
-          <NavElement
-            id="02"
-            title="Experience"
-            path="/experience"
-          ></NavElement>
-          <NavElement id="03" title="Contact" path="contact"></NavElement>
-          <div>
-            <button
-              onClick={handleDownload}
-              className="px-4 py-2 border-2 border-emerald-500 rounded-lg text-emerald-500 text-lg leading-relaxed font-mono hover:text-white transition-all"
-            >
-              Resume
-            </button>
-          </div>
+        <div className="hidden lg:flex items-center gap-2">
+          <NavElement id="01" title="About" path="/about" />
+          <NavElement id="02" title="Experience" path="/experience" />
+          <NavElement id="03" title="Contact" path="contact" />
+          <button
+            onClick={handleDownload}
+            className="ml-2 px-4 py-2 border border-emerald-500 rounded text-emerald-500 text-sm font-mono hover:bg-emerald-500 hover:text-vscode-blue transition-all duration-200"
+          >
+            Resume
+          </button>
         </div>
         {/* Mobile Menu Button */}
         <div className="lg:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+            className="inline-flex items-center justify-center p-2 rounded text-gray-400 hover:text-gray-100 hover:bg-white/5 transition-colors duration-200"
           >
             {isOpen ? (
-              <X className="block h-6 w-6 " />
+              <X className="block h-6 w-6" />
             ) : (
-              <Menu className="block h-6 w-6 " />
+              <Menu className="block h-6 w-6" />
             )}
           </button>
         </div>
       </div>
-      {/* Routes */}
       {/* Mobile Menu */}
-      <div className=" flex flex-col lg:hidden">
+      <div className="flex flex-col lg:hidden">
         {isOpen && (
-          <div>
-            <NavElement
-              id="01"
-              title="About"
-              path="/about"
-              handleCloseMenu={setIsOpen}
-            ></NavElement>
-            <NavElement
-              id="02"
-              title="Experience"
-              path="/experience"
-            ></NavElement>
-            <NavElement id="03" title="Contact" path="contact"></NavElement>
-            <div>
-              <button
-                onClick={handleDownload}
-                className="px-3 pt-4 rounded-lg text-emerald-500 text-lg leading-relaxed font-mono hover:text-white transition-all"
-              >
-                Download my resume
-              </button>
-            </div>
+          <div className="pt-2 pb-4 border-t border-white/5 mt-3">
+            <NavElement id="01" title="About" path="/about" handleCloseMenu={setIsOpen} />
+            <NavElement id="02" title="Experience" path="/experience" handleCloseMenu={setIsOpen} />
+            <NavElement id="03" title="Contact" path="contact" handleCloseMenu={setIsOpen} />
+            <button
+              onClick={handleDownload}
+              className="px-3 pt-4 text-emerald-500 text-sm font-mono hover:text-white transition-colors duration-200"
+            >
+              Download resume
+            </button>
           </div>
         )}
       </div>

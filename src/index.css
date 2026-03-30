@@ -3,7 +3,31 @@
 @tailwind utilities;
 
 @layer base {
-	p {
-	  @apply text-gray-400 leading-relaxed ;
-	}
+  html {
+    scroll-behavior: smooth;
   }
+
+  p {
+    @apply text-gray-400 leading-relaxed;
+  }
+
+  ::selection {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #a7f3d0;
+  }
+}
+
+/* Thin emerald scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #011628;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.65);
+}

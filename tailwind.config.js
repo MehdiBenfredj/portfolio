@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         'vscode-blue': '#011628',
+        'card-bg': '#041e30',
         'name-color': '#c3d2df',
       },
     },
