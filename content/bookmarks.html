@@ -1,0 +1,79 @@
+---
+title: bookmarks
+active_nav: bookmarks
+extra_css: /assets/bookmarks.css
+---
+<main class="wrap">
+  <p class="meta">bookmarks</p>
+  <h1 class="section"><span class="badge">🔖</span> Things I clicked on.</h1>
+  <p style="font-size: 1.15rem; color: var(--ink-2); margin: 1rem 0 1rem;">
+    A reverse-chrono dump of stuff I found worth saving. 📰 Articles, 📺 YouTube, 💬 tweets, 🛒 things I bought.
+  </p>
+
+  <div class="filters" id="filters">
+    <span class="tag on" data-filter="all">✨ all</span>
+    <span class="tag" data-filter="link">📰 articles</span>
+    <span class="tag" data-filter="video">📺 videos</span>
+    <span class="tag" data-filter="tweet">💬 tweets</span>
+    <span class="tag" data-filter="buy">🛒 buys</span>
+    <span class="tag" data-filter="photo">📸 photos</span>
+  </div>
+
+  <div class="feed" id="bookmarks">loading…</div>
+</main>
+
+<script>
+  const fmt = (iso) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  const ytId = (url='') => { const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/); return m ? m[1] : null; };
+  const ytThumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+  let ITEMS = [];
+  function mediaBlock(item) {
+    if (item.kind === 'photo' || item.image) {
+      return `<a class="media" href="${item.url || '#'}">
+        <img src="${item.image}" alt="" loading="lazy">
+        ${item.source ? `<div class="source-bar"><span>${item.source}</span><span>open →</span></div>` : ''}
+      </a>`;
+    }
+    const id = ytId(item.url || '');
+    if (id) {
+      return `<a class="media" href="${item.url}" target="_blank" rel="noopener">
+        <img src="${ytThumb(id)}" alt="" loading="lazy">
+        <div class="play"><span>▶</span></div>
+        <div class="source-bar"><span>youtube</span><span>watch →</span></div>
+      </a>`;
+    }
+    return '';
+  }
+
+  function render(filter = 'all') {
+    const items = ITEMS.filter(s => ['link', 'video', 'tweet', 'buy', 'photo'].includes(s.kind));
+    const filtered = filter === 'all' ? items : items.filter(s => s.kind === filter);
+    document.getElementById('bookmarks').innerHTML = filtered.map(item => {
+      const meta = `
+        <div class="bm-meta">
+          <span class="meta">${fmt(item.date)}</span>
+          <span class="tag">${item.kind}</span>
+          ${(item.tags || []).map(t => `<span class="tag accent">#${t}</span>`).join('')}
+        </div>`;
+      if (item.kind === 'tweet') {
+        return `<article class="bm">${meta}
+          <p style="font-style: italic; font-size: 1.1rem;">"${item.body}"</p></article>`;
+      }
+      return `<article class="bm">${meta}
+        ${item.title ? `<h3><a href="${item.url || '#'}">${item.title} <span class="arrow">→</span></a></h3>` : ''}
+        ${item.body ? `<p>${item.body.slice(0, 200)}</p>` : ''}
+        ${mediaBlock(item)}
+      </article>`;
+    }).join('');
+  }
+
+  loadPosts().then(items => { ITEMS = items; render(); });
+  document.getElementById('filters').addEventListener('click', (e) => {
+    const t = e.target.closest('[data-filter]');
+    if (!t) return;
+    document.querySelectorAll('#filters .tag').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    render(t.dataset.filter);
+  });
+</script>

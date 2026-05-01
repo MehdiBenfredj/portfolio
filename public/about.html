@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>about me</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tokens.css">
+<link rel="icon" type="image/png" href="/assets/mehdi_ghibli_round_very_small.png">
+<link rel="stylesheet" href="/assets/about.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+</head>
+<body>
+
+<header class="site-head">
+  <a href="/" class="brand"><img src="/assets/mehdi_ghibli_round_small.png" alt="Mehdi" class="brand-avatar"> Mehdi</a>
+  <nav>
+    <a href="/">🏠 stream</a>
+    <a href="/writing.html">✍️ writing</a>
+    <a href="/projects.html">🛠 projects</a>
+    <a href="/stack.html">⚙️ stack</a>
+    <a href="/bookmarks.html">🔖 bookmarks</a>
+    <a href="/about.html" class="active">👋 about</a>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾</button>
+  </nav>
+</header>
+
+<script src="/assets/posts.js"></script>
+<script src="/assets/data.js"></script>
+
+<main class="wrap">
+  <p class="meta">about</p>
+
+  <div class="about-hero">
+    <div class="photo-frame">
+      <div class="tape"></div>
+      <img src="/assets/me.jpg" alt="Mehdi" onerror="this.style.display='none'">
+    </div>
+    <div>
+      <h1 class="hello">Hey <span class="wave">👋</span> I'm <span style="color: var(--accent);">Mehdi</span>.</h1>
+      <p class="lede">
+        Software person by day, football fan by every other waking minute. I read too much, I have
+        too many opinions, and I built this site to keep them all in one place.
+      </p>
+      <div class="cta-row">
+        <a href="/contact.html" class="cta primary">say hi →</a>
+        <a href="/" class="cta">see what I'm up to</a>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section"><span class="badge">✨</span> Things I'm into</h2>
+  <div class="stickers">
+    <div class="sticker"><span class="emoji">⚽️</span><div><div class="label">Football</div><div class="sub">Barça til I die</div></div></div>
+    <div class="sticker"><span class="emoji">🤖</span><div><div class="label">AI tooling</div><div class="sub">when it disappears</div></div></div>
+    <div class="sticker"><span class="emoji">📚</span><div><div class="label">Long reads</div><div class="sub">essays > tweets</div></div></div>
+    <div class="sticker"><span class="emoji">🎧</span><div><div class="label">Music</div><div class="sub">Cheb Hasni</div></div></div>
+    <div class="sticker"><span class="emoji">🍳</span><div><div class="label">Cooking</div><div class="sub">Mediteranean, mostly</div></div></div>
+    <div class="sticker"><span class="emoji">🎮</span><div><div class="label">Gaming</div><div class="sub">FIFA</div></div></div>
+    <div class="sticker"><span class="emoji">🗺</span><div><div class="label">Politics</div><div class="sub">thoughts 💭</div></div></div>
+    <div class="sticker"><span class="emoji">🎨</span><div><div class="label">Brutalist web</div><div class="sub">make it weird</div></div></div>
+  </div>
+
+  <h2 class="section"><span class="badge">📍</span> Quick facts</h2>
+  <div class="facts">
+    <div class="fact"><div class="lab">📌 currently</div><div class="val">Software Engineer @ Natixis</div></div>
+    <div class="fact"><div class="lab">🌍 based in</div><div class="val">Paris</div></div>
+    <div class="fact"><div class="lab">⏪ before this</div><div class="val">BNP Paribas CIB</div></div>
+    <div class="fact"><div class="lab">🛠 tools</div><div class="val"><a href="/stack.html">/stack →</a></div></div>
+    <div class="fact"><div class="lab">✍️ writing</div><div class="val"><a href="/writing.html">/writing →</a></div></div>
+    <div class="fact"><div class="lab">📬 reach me</div><div class="val"><a href="mailto:contact@mehdibenfredj.com">email →</a></div></div>
+  </div>
+
+  <blockquote class="fun">
+    Be more amateur. Take more swings. Care less about the platform and more about the post.
+  </blockquote>
+
+  <h2 class="section"><span class="badge">🤔</span> Why this exists</h2>
+  <div class="why">
+    <p>
+      Two reasons. <b>One:</b> I needed somewhere to think out loud that wasn't owned by a company
+      that might decide tomorrow it doesn't want me anymore.
+    </p>
+    <p>
+      <b>Two:</b> I missed the old web. The one made by hand. The one that linked sideways instead
+      of just up. So I built one.
+    </p>
+    <p>
+      It's plain HTML, plain CSS, and a sprinkle of JS. No framework. No build. The source is
+      <a href="https://github.com/mehdibenfredj/portfolio">over here</a> — fork it, rip it apart, make your own.
+    </p>
+  </div>
+
+  <p style="margin-top: 3rem; text-align: center; font-family: var(--mono); font-size: 0.8rem; color: var(--ink-3);">
+    ✦ ✦ ✦ &nbsp; last touched: april 2026 &nbsp; ✦ ✦ ✦
+  </p>
+</main>
+
+
+<footer class="site-foot">
+  <div>Made with love ❤️ by Mehdi <a href="https://github.com/mehdibenfredj/portfolio">source on github</a>.</div>
+  <div>
+    <a href="https://x.com/BenfredjMehdi">twitter</a> ·
+    <a href="https://github.com/mehdibenfredj">github</a> ·
+    <a href="mailto:contact@mehdibenfredj.com">email</a>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>

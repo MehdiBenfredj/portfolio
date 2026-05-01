@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>writing</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tokens.css">
+<link rel="icon" type="image/png" href="/assets/mehdi_ghibli_round_very_small.png">
+<link rel="stylesheet" href="/assets/writing.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+</head>
+<body>
+
+<header class="site-head">
+  <a href="/" class="brand"><img src="/assets/mehdi_ghibli_round_small.png" alt="Mehdi" class="brand-avatar"> Mehdi</a>
+  <nav>
+    <a href="/">🏠 stream</a>
+    <a href="/writing.html" class="active">✍️ writing</a>
+    <a href="/projects.html">🛠 projects</a>
+    <a href="/stack.html">⚙️ stack</a>
+    <a href="/bookmarks.html">🔖 bookmarks</a>
+    <a href="/about.html">👋 about</a>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾</button>
+  </nav>
+</header>
+
+<script src="/assets/posts.js"></script>
+<script src="/assets/data.js"></script>
+
+<main class="wrap">
+  <p class="meta">writing</p>
+  <h1 class="section"><span class="badge">✍️</span> Notes & essays.</h1>
+  <p style="font-size: 1.2rem; color: var(--ink-2); margin: 1rem 0 2rem;">
+    Longer-form things. About software, AI, the news, and whatever's on my mind. No editor. No SEO. Just me thinking out loud. 🌱
+  </p>
+  <div id="posts">loading…</div>
+</main>
+
+<script>
+  const fmt = (iso) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  loadPosts().then(items => {
+    const posts = items.filter(s => s.kind === 'post' || s.kind === 'thought');
+    const byYear = {};
+    posts.forEach(p => {
+      const y = new Date(p.date).getFullYear();
+      (byYear[y] = byYear[y] || []).push(p);
+    });
+    const years = Object.keys(byYear).sort((a,b) => b - a);
+    document.getElementById('posts').innerHTML = years.map(y => `
+      <div class="group-head">${y}</div>
+      ${byYear[y].map(p => {
+        const href = `/post.html?slug=${encodeURIComponent(p.slug)}`;
+        const preview = (p.body.split('\n\n')[0] || '').slice(0, 180);
+        return `<article class="post">
+          <div class="post-meta">
+            <span class="meta">${fmt(p.date)}</span>
+            <span class="tag">${p.kind === 'post' ? 'essay' : 'note'}</span>
+            ${(p.tags || []).map(t => `<span class="tag accent">#${t}</span>`).join('')}
+          </div>
+          <h3><a href="${href}">${p.title}</a></h3>
+          <p>${preview}${preview.length >= 180 ? '…' : ''}</p>
+        </article>`;
+      }).join('')}
+    `).join('');
+  });
+</script>
+
+
+<footer class="site-foot">
+  <div>Made with love ❤️ by Mehdi <a href="https://github.com/mehdibenfredj/portfolio">source on github</a>.</div>
+  <div>
+    <a href="https://x.com/BenfredjMehdi">twitter</a> ·
+    <a href="https://github.com/mehdibenfredj">github</a> ·
+    <a href="mailto:contact@mehdibenfredj.com">email</a>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>projects</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tokens.css">
+<link rel="icon" type="image/png" href="/assets/mehdi_ghibli_round_very_small.png">
+<link rel="stylesheet" href="/assets/projects.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+</head>
+<body>
+
+<header class="site-head">
+  <a href="/" class="brand"><img src="/assets/mehdi_ghibli_round_small.png" alt="Mehdi" class="brand-avatar"> Mehdi</a>
+  <nav>
+    <a href="/">🏠 stream</a>
+    <a href="/writing.html">✍️ writing</a>
+    <a href="/projects.html" class="active">🛠 projects</a>
+    <a href="/stack.html">⚙️ stack</a>
+    <a href="/bookmarks.html">🔖 bookmarks</a>
+    <a href="/about.html">👋 about</a>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾</button>
+  </nav>
+</header>
+
+<script src="/assets/posts.js"></script>
+<script src="/assets/data.js"></script>
+
+<main class="wrap">
+  <p class="meta">projects</p>
+  <h1 class="section"><span class="badge">🛠</span> Things I made.</h1>
+  <p style="font-size: 1.2rem; color: var(--ink-2); margin: 1rem 0 2rem;">
+    A mix of shipped products 🚀, weekend hacks ⚡️, and experiments that got out of hand 🌪. Some still alive,
+    some I killed on purpose. All taught me something.
+  </p>
+
+  <div class="callout">
+    Want to build something together? <a href="/contact.html" style="color: var(--paper); text-decoration: underline;">say hi →</a>
+  </div>
+
+  <div id="projects"></div>
+
+  <p style="margin-top: 3rem;" class="meta">also see: <a href="https://github.com/mehdibenfredj">github</a> for the full mess</p>
+</main>
+
+<script>
+  document.getElementById('projects').innerHTML = PROJECTS.map(p => `
+    <div class="proj">
+      <div class="year">${p.year}</div>
+      <div>
+        <h3><a href="${p.href}">${p.name} →</a></h3>
+        <p>${p.desc}</p>
+      </div>
+      <div class="status ${p.tag}">${p.tag}</div>
+    </div>
+  `).join('');
+</script>
+
+
+<footer class="site-foot">
+  <div>Made with love ❤️ by Mehdi <a href="https://github.com/mehdibenfredj/portfolio">source on github</a>.</div>
+  <div>
+    <a href="https://x.com/BenfredjMehdi">twitter</a> ·
+    <a href="https://github.com/mehdibenfredj">github</a> ·
+    <a href="mailto:contact@mehdibenfredj.com">email</a>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>

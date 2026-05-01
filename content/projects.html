@@ -1,0 +1,34 @@
+---
+title: projects
+active_nav: projects
+extra_css: /assets/projects.css
+---
+<main class="wrap">
+  <p class="meta">projects</p>
+  <h1 class="section"><span class="badge">🛠</span> Things I made.</h1>
+  <p style="font-size: 1.2rem; color: var(--ink-2); margin: 1rem 0 2rem;">
+    A mix of shipped products 🚀, weekend hacks ⚡️, and experiments that got out of hand 🌪. Some still alive,
+    some I killed on purpose. All taught me something.
+  </p>
+
+  <div class="callout">
+    Want to build something together? <a href="/contact.html" style="color: var(--paper); text-decoration: underline;">say hi →</a>
+  </div>
+
+  <div id="projects"></div>
+
+  <p style="margin-top: 3rem;" class="meta">also see: <a href="https://github.com/mehdibenfredj">github</a> for the full mess</p>
+</main>
+
+<script>
+  document.getElementById('projects').innerHTML = PROJECTS.map(p => `
+    <div class="proj">
+      <div class="year">${p.year}</div>
+      <div>
+        <h3><a href="${p.href}">${p.name} →</a></h3>
+        <p>${p.desc}</p>
+      </div>
+      <div class="status ${p.tag}">${p.tag}</div>
+    </div>
+  `).join('');
+</script>

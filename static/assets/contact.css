@@ -1,0 +1,14 @@
+.channels { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 2rem 0; }
+.ch {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  padding: 1.2rem 1.3rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 120ms;
+  display: block;
+}
+.ch:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); background: var(--paper); }
+.ch h3 { font-family: var(--sans); margin: 0 0 4px; }
+.ch p { font-size: 0.9rem; color: var(--ink-3); margin: 0; }
+.ch .handle { font-family: var(--mono); color: var(--accent); margin-top: 4px; font-size: 0.85rem; }

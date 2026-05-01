@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ .Title }}</title>
+{{ with .Description }}<meta name="description" content="{{ . }}">{{ end }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tokens.css">
+<link rel="icon" type="image/png" href="/assets/mehdi_ghibli_round_very_small.png">
+{{ with .Params.extra_css }}<link rel="stylesheet" href="{{ . }}">{{ end }}
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+</head>
+<body>
+
+<header class="site-head">
+  <a href="/" class="brand"><img src="/assets/mehdi_ghibli_round_small.png" alt="Mehdi" class="brand-avatar"> Mehdi</a>
+  <nav>
+    <a href="/"{{ if eq .Params.active_nav "stream" }} class="active"{{ end }}>🏠 stream</a>
+    <a href="/writing.html"{{ if eq .Params.active_nav "writing" }} class="active"{{ end }}>✍️ writing</a>
+    <a href="/projects.html"{{ if eq .Params.active_nav "projects" }} class="active"{{ end }}>🛠 projects</a>
+    <a href="/stack.html"{{ if eq .Params.active_nav "stack" }} class="active"{{ end }}>⚙️ stack</a>
+    <a href="/bookmarks.html"{{ if eq .Params.active_nav "bookmarks" }} class="active"{{ end }}>🔖 bookmarks</a>
+    <a href="/about.html"{{ if eq .Params.active_nav "about" }} class="active"{{ end }}>👋 about</a>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾</button>
+  </nav>
+</header>
+
+<script src="/assets/posts.js"></script>
+<script src="/assets/data.js"></script>
+
+{{ block "main" . }}{{ end }}
+
+<footer class="site-foot">
+  <div>Made with love ❤️ by Mehdi <a href="https://github.com/mehdibenfredj/portfolio">source on github</a>.</div>
+  <div>
+    <a href="https://x.com/BenfredjMehdi">twitter</a> ·
+    <a href="https://github.com/mehdibenfredj">github</a> ·
+    <a href="mailto:contact@mehdibenfredj.com">email</a>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>

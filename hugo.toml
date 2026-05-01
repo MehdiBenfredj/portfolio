@@ -1,0 +1,8 @@
+baseURL = "/"
+locale = "en-us"
+title = "Mehdi — a personal mess"
+uglyURLs = true
+disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
+
+[params]
+  description = "Software, AI, football, books, politics. A messy corner of the internet."
