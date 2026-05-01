@@ -4,6 +4,8 @@
    Both light + dark.
 */
 
+@view-transition { navigation: auto; }
+
 :root {
   /* Light (default) — warm off-white */
   --paper: #f4ede1;
@@ -45,6 +47,10 @@
 }
 
 * { box-sizing: border-box; }
+
+@view-transition { navigation: auto; }
+
+html { scrollbar-gutter: stable; }
 
 html, body {
   margin: 0;
@@ -124,7 +130,9 @@ button {
   background: var(--paper);
   z-index: 50;
   font-family: var(--sans);
+  view-transition-name: site-head;
 }
+.site-foot { view-transition-name: site-foot; }
 .site-head .brand {
   font-weight: 700;
   letter-spacing: -0.02em;

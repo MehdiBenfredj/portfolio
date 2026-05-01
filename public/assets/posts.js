@@ -68,10 +68,17 @@
 
   async function loadPosts() {
     if (window.__POSTS_CACHE) return window.__POSTS_CACHE;
-    const idx = await fetch('posts/index.json').then(r => r.json());
+    try {
+      const stored = sessionStorage.getItem('__posts');
+      if (stored) {
+        window.__POSTS_CACHE = JSON.parse(stored);
+        return window.__POSTS_CACHE;
+      }
+    } catch (_) {}
+    const idx = await fetch('/posts/index.json').then(r => r.json());
     const entries = idx.posts || [];
     const items = await Promise.all(entries.map(async (entry) => {
-      const text = await fetch('posts/' + entry.file).then(r => r.text());
+      const text = await fetch('/posts/' + entry.file).then(r => r.text());
       const body = text.trim();
       return {
         file: entry.file,
@@ -89,6 +96,7 @@
     }));
     items.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
     window.__POSTS_CACHE = items;
+    try { sessionStorage.setItem('__posts', JSON.stringify(items)); } catch (_) {}
     return items;
   }
 
