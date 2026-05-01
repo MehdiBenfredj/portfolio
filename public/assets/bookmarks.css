@@ -1,5 +1,5 @@
 .feed { max-width: 720px; margin: 0 auto; }
-.filters { display: flex; gap: 6px; flex-wrap: wrap; margin: 1.5rem 0 0.5rem; }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin: 1.5rem 0 0.5rem; }
 .filters .tag { cursor: pointer; user-select: none; }
 .filters .tag.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .bm { border-top: 1px solid var(--rule); padding: 1.4rem 0; }

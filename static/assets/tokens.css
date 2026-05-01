@@ -1,13 +1,9 @@
 /* === Design tokens ===
    Warm off-white + deep ink + one warm accent.
    Sans for headings, serif for body.
-   Both light + dark.
 */
 
-@view-transition { navigation: auto; }
-
 :root {
-  /* Light (default) — warm off-white */
   --paper: #f4ede1;
   --paper-2: #ebe2d2;
   --paper-3: #ded2bd;
@@ -29,21 +25,6 @@
   /* Scale */
   --max-w: 720px;
   --gap: 1.25rem;
-}
-
-[data-theme="dark"] {
-  --paper: #161310;
-  --paper-2: #1f1b16;
-  --paper-3: #2a241d;
-  --ink: #f0e7d6;
-  --ink-2: #d4c8b3;
-  --ink-3: #978a76;
-  --rule: #f0e7d6;
-  --accent: #f08753;
-  --accent-2: #ffae7a;
-  --highlight: #d9a93a;
-  --link: #ffae7a;
-  --shadow: 0 1px 0 rgba(240, 231, 214, 0.06);
 }
 
 * { box-sizing: border-box; }
@@ -162,19 +143,6 @@ button {
 .site-head nav a:hover { color: var(--ink); background: transparent; }
 .site-head nav a.active { color: var(--ink); font-weight: 600; }
 
-.theme-toggle {
-  border: 1px solid var(--rule);
-  background: transparent;
-  color: var(--ink);
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.theme-toggle:hover { background: var(--paper-2); }
-
 /* Footer */
 .site-foot {
   border-top: 1px dashed var(--rule);
@@ -225,9 +193,6 @@ button {
 .sticker-palette > *:nth-child(5n)   { background: #f5d77a; }
 .sticker-palette > *:nth-child(5n+2) { background: #ffe4c7; }
 .sticker-palette > *:nth-child(5n+4) { background: #d6e8d3; }
-[data-theme="dark"] .sticker-palette > *:nth-child(5n)   { background: #4a3a18; }
-[data-theme="dark"] .sticker-palette > *:nth-child(5n+2) { background: #4a2f18; }
-[data-theme="dark"] .sticker-palette > *:nth-child(5n+4) { background: #1f3a1f; }
 
 /* Big accent quote/callout block */
 .callout {
@@ -309,3 +274,42 @@ h2.section .badge, h1.section .badge { font-size: 1.3rem; }
 .mono { font-family: var(--mono); }
 .ink-3 { color: var(--ink-3); }
 .accent { color: var(--accent); }
+
+/* === Mobile === */
+@media (max-width: 720px) {
+  html, body { font-size: 17px; }
+
+  .site-head {
+    padding: 0.85rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  .site-head nav {
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .wrap, .wrap-wide {
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .site-foot {
+    padding: 1.25rem 1rem 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .callout {
+    padding: 1.1rem 1.2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-head nav {
+    gap: 0.6rem;
+    font-size: 0.8rem;
+  }
+}

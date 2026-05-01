@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="/assets/contact.css">
 <link rel="stylesheet" href="/assets/404.css">
 <link rel="icon" type="image/png" href="/assets/mehdi_ghibli_round_very_small.png">
-<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
 
@@ -32,7 +31,6 @@
     <a href="/stack.html"{{ if eq .Params.active_nav "stack" }} class="active"{{ end }}>⚙️ stack</a>
     <a href="/bookmarks.html"{{ if eq .Params.active_nav "bookmarks" }} class="active"{{ end }}>🔖 bookmarks</a>
     <a href="/about.html"{{ if eq .Params.active_nav "about" }} class="active"{{ end }}>👋 about</a>
-    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾</button>
   </nav>
 </header>
 
@@ -50,6 +48,5 @@
   </div>
 </footer>
 
-<script src="/assets/site.js"></script>
 </body>
 </html>

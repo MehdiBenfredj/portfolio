@@ -41,8 +41,14 @@
   margin: 0 auto;
   padding: 1rem 1.5rem;
 }
+@media (max-width: 720px) {
+  .hero { padding: 2.5rem 1rem 1.5rem; }
+  .feed { padding: 1rem; }
+  .filters { padding: 0 1rem; }
+  .stamp { padding: 0.85rem 1rem; }
+}
 .feed-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.25rem; }
-.filters { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 1.5rem; max-width: 720px; margin: 0 auto 1rem; }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; padding: 0 1.5rem; max-width: 720px; margin: 0 auto 1rem; }
 .filters .tag { cursor: pointer; user-select: none; }
 .filters .tag.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 

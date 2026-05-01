@@ -2,27 +2,25 @@
 
 A messy corner of the internet. Writing, links, videos, photos, projects, stack — all in one stream. Inspired by [taniarascia.com](https://www.taniarascia.com) and [brianlovin.com](https://brianlovin.com).
 
-Built with **Hugo** (for layout inheritance), plain CSS, and a sprinkle of JavaScript. Posts are Markdown files in a folder. No tracking. No CMS.
+Built with **Hugo** (for layout inheritance), plain CSS, and a sprinkle of JavaScript. Posts are Markdown files in a folder. No tracking. No CMS. No dark mode — light only, by choice.
+
+Live at **[www.mehdibenfredj.com](https://www.mehdibenfredj.com)**.
 
 ---
 
 ## Quick start
 
 ```bash
-# 1. Clone (or download) this repo
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
-cd YOUR-REPO
+git clone https://github.com/mehdibenfredj/portfolio.git
+cd portfolio
 
-# 2. Install Hugo (one-time) — requires Go toolchain via Homebrew
+# Install Hugo (one-time)
 brew install hugo
 
-# 3. Run the local server
+# Run the local server
 hugo serve
-
-# 4. Open http://localhost:1313
+# → http://localhost:1313
 ```
-
-Then start replacing `[TODO]` placeholders with your stuff. Search for `[TODO` to find them all.
 
 ---
 
@@ -31,7 +29,7 @@ Then start replacing `[TODO]` placeholders with your stuff. Search for `[TODO` t
 ```
 layouts/
   _default/
-    baseof.html    shared layout: <head>, header, nav, footer, site.js
+    baseof.html    shared layout: <head>, header, nav, footer
     single.html    wraps content pages with baseof.html
   index.html       wraps the home page with baseof.html
   404.html         standalone bare layout (no nav) — 404 page
@@ -49,28 +47,24 @@ content/
 hugo.toml          Hugo config (title, baseURL, uglyURLs)
 
 static/
+  CNAME            custom domain for GitHub Pages
   posts/
     index.json     post metadata (date, kind, title, tags, url, etc.)
     README.md      full guide for adding posts
     *.md           post body content (no front-matter)
   assets/
-    tokens.css     design tokens (colors, type, dark mode)
-    index.css      page-specific styles for index
-    writing.css    page-specific styles for writing
-    post.css       page-specific styles for post
-    about.css      page-specific styles for about
-    contact.css    page-specific styles for contact
-    projects.css   page-specific styles for projects
-    stack.css      page-specific styles for stack
-    bookmarks.css  page-specific styles for bookmarks
-    404.css        page-specific styles for 404
+    tokens.css     design tokens (colors, type) + global styles + mobile
+    index.css      home page styles
+    writing.css    writing page styles
+    post.css       single-post viewer styles
+    about.css      about page styles
+    contact.css    contact page styles
+    projects.css   projects page styles
+    stack.css      stack page styles
+    bookmarks.css  bookmarks page styles
+    404.css        404 page styles
     posts.js       markdown loader + renderer
     data.js        projects + stack data
-    site.js        theme toggle
-
-.github/
-  workflows/
-    deploy.yml     GitHub Actions: build Hugo → deploy to Pages
 ```
 
 ---
@@ -133,49 +127,42 @@ These live in `static/assets/data.js`:
 
 Edit the HTML directly:
 
-- **Header + nav + footer** — `layouts/_default/baseof.html` (one place, applies to all pages)
+- **Header + nav + footer** — `layouts/_default/baseof.html`
 - **About page** — `content/about.html`
 - **Contact page** — `content/contact.html`
 
 ---
 
-## Deploy to GitHub Pages
+## Deploy
 
-The repo includes a GitHub Actions workflow that builds Hugo and deploys automatically on every push to `main`.
+This repo deploys to **www.mehdibenfredj.com** via GitHub Pages. A GitHub Actions workflow builds Hugo and publishes on every push to `main`.
 
-1. Create a new public repo on GitHub. Push this folder to it:
+### Custom domain setup (already in place)
 
-   ```bash
-   git init
-   git add .
-   git commit -m "first commit"
-   git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
-   git push -u origin main
-   ```
+- `static/CNAME` contains `www.mehdibenfredj.com` (Hugo copies it into `public/` on every build).
+- DNS at the registrar (IONOS):
+  - Apex `@` → A records pointing to GitHub Pages: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+  - `www` → CNAME to `mehdibenfredj.github.io`
+- GitHub repo → Settings → Pages: custom domain `www.mehdibenfredj.com`, **Enforce HTTPS** enabled.
 
-2. On GitHub, go to **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-4. The workflow runs automatically. Your site is live at:
-   `https://YOUR-USERNAME.github.io/YOUR-REPO/`
+### Forking for your own site
 
-If you want it at the root (`https://YOUR-USERNAME.github.io/`), name the repo `YOUR-USERNAME.github.io`.
-
-### Custom domain (optional)
-
-1. Add a `CNAME` file at the project root with one line: `yoursite.com`.
-2. Configure DNS at your registrar:
-   - **Apex domain (`yoursite.com`)**: A records → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - **Subdomain (`www.yoursite.com`)**: CNAME → `YOUR-USERNAME.github.io`
-3. In **Settings → Pages**, enter your domain and tick **Enforce HTTPS** once available.
+1. Fork or clone this repo.
+2. Replace `static/CNAME` with your own domain (or delete it for a `*.github.io` URL).
+3. Update `baseURL` in `hugo.toml`.
+4. Configure DNS at your registrar:
+   - Apex: A records → GitHub's four IPs above
+   - `www`: CNAME → `YOUR-USERNAME.github.io`
+5. In GitHub → Settings → Pages, set the custom domain and enforce HTTPS.
 
 ---
 
 ## Customizing the design
 
-- **Colors + dark mode** — `static/assets/tokens.css`. `:root` is light mode, `[data-theme="dark"]` is dark. Change `--accent` for a quick re-skin.
+- **Colors** — `static/assets/tokens.css` (`:root` block). Change `--accent` for a quick re-skin.
 - **Fonts** — Inter (sans) + Source Serif (body) + JetBrains Mono, loaded from Google Fonts in `layouts/_default/baseof.html`.
 - **Page-specific styles** — each page declares `extra_css: /assets/PAGENAME.css` in its front-matter; the layout picks it up automatically.
+- **Mobile** — single breakpoint at 720px (with a tighter one at 420px) at the bottom of `tokens.css`.
 
 ---
 
@@ -187,18 +174,6 @@ The site uses `fetch()` to load Markdown, so opening `index.html` directly via `
 hugo serve
 # → http://localhost:1313
 ```
-
----
-
-## Filling in the placeholders
-
-Run a project-wide search for `[TODO` to find everything that needs replacing:
-
-- `static/assets/data.js` — projects and stack
-- `content/about.html`, `content/contact.html` — bio, location, socials
-- `layouts/_default/baseof.html` — footer name, github/twitter/email links
-- `static/posts/*.md` — sample posts (delete or replace)
-- `hugo.toml` — site title
 
 ---
 

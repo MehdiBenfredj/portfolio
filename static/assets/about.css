@@ -83,9 +83,6 @@ h1.hello .wave { display: inline-block; transform-origin: 70% 70%; animation: wa
 .sticker:nth-child(5n+2) { background: #ffe4c7; }
 .sticker:nth-child(5n+3) { background: var(--paper-2); }
 .sticker:nth-child(5n+4) { background: #d6e8d3; }
-[data-theme="dark"] .sticker:nth-child(5n) { background: #4a3a18; }
-[data-theme="dark"] .sticker:nth-child(5n+2) { background: #4a2f18; }
-[data-theme="dark"] .sticker:nth-child(5n+4) { background: #1f3a1f; }
 
 .facts {
   display: grid;

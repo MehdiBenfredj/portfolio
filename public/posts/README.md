@@ -2,56 +2,62 @@
 
 Drop Markdown files here. They show up on the home feed automatically.
 
-## How to add a post
+## How posts work
 
-1. Create a new `.md` file in this folder. Filename convention: `YYYY-MM-DD-slug.md`.
-2. Add its filename to `index.json` (most recent first works, but actual ordering uses the `date:` in front-matter).
+Each post is **two things**:
+
+1. A Markdown file in this folder — `YYYY-MM-DD-slug.md`. Body only, **no front-matter**.
+2. An entry in `index.json` (this same folder). All metadata (date, kind, title, tags, url, etc.) lives there. The feed is rendered from `index.json`, not from scanning files.
+
+Entries in `index.json` are kept newest-first.
+
+## Adding a post
+
+1. Create `YYYY-MM-DD-slug.md` in this folder. Write plain Markdown.
+
+   ```markdown
+   Body in markdown. Headings, **bold**, _italic_, [links](https://example.com),
+   lists, code blocks — all work.
+   ```
+
+2. Prepend an entry at the top of the `posts` array in `index.json`:
+
+   ```json
+   {
+     "file": "2026-05-02-my-post.md",
+     "date": "2026-05-02",
+     "kind": "thought",
+     "title": "My title here",
+     "tags": ["ai", "thinking"]
+   }
+   ```
+
 3. Commit + push. GitHub Pages re-deploys in ~30 seconds.
-
-## File format
-
-Each file has YAML-ish front-matter at the top, then Markdown body:
-
-```markdown
----
-date: 2026-04-29
-kind: thought
-tags: [ai, thinking]
-title: My title here
----
-
-Body in markdown. Headings, **bold**, _italic_, [links](https://example.com), lists, all work.
-```
 
 ## Field reference
 
+- **`file`** *(required)* — filename of the markdown file in this folder.
 - **`date`** *(required)* — `YYYY-MM-DD`. Used for sorting and display.
 - **`kind`** *(required)* — what flavor of post:
-  - `thought` — a short reflection. Title + body.
-  - `post` — a longer essay. Renders with full markdown formatting on its own page.
+  - `thought` — a short reflection. Needs `title`.
+  - `post` — a longer essay, renders on its own page. Needs `title`.
   - `tweet` — a one-liner with no title (the body is the whole thing).
-  - `link` — a link to an article. Add `url:` and `source:`.
-  - `video` — a YouTube link. Thumbnail auto-generated from `url:`.
-  - `photo` — an image post. Add `image:`.
-  - `buy` — a thing you got. Add `url:` and `source:` (e.g. `amazon.com`).
+  - `link` — a link to an article. Needs `url` and `source`.
+  - `video` — a YouTube link. Needs `url` and `source: "youtube.com"`. Thumbnail auto-derived.
+  - `photo` — an image post. Needs `image`.
+  - `buy` — a thing you got. Needs `url` and `source`.
 - **`title`** — required for everything except `tweet`.
-- **`tags`** — array of strings, e.g. `[ai, football]`.
+- **`tags`** — array of lowercase strings, e.g. `["ai", "football"]`.
 - **`url`** — for `link`, `video`, `buy`.
-- **`source`** — short label like `youtube.com`, `arxiv.org`, `nyt.com`.
-- **`image`** — for `photo`, or to give any `link` a preview thumbnail.
+- **`source`** — short host label like `youtube.com`, `arxiv.org`, `nyt.com`.
+- **`image`** — required for `photo`; optional thumbnail for `link`.
 
-## Auto-regenerate index.json (optional)
+## Removing a post
 
-If you don't want to hand-edit `index.json`, run this from the project root before committing — it regenerates the index from whatever `.md` files are in `posts/`:
+1. Delete the `.md` file from this folder.
+2. Remove its entry from the `posts` array in `index.json`.
+3. Commit + push.
 
-```bash
-ls posts/*.md | xargs -n1 basename | jq -R -s -c 'split("\n") | map(select(. != "")) | {posts: .}' > posts/index.json
-```
+## Tip: use the `/posts` skill
 
-Or in Node:
-
-```bash
-node -e "const fs=require('fs');fs.writeFileSync('posts/index.json',JSON.stringify({posts:fs.readdirSync('posts').filter(f=>f.endsWith('.md')).sort().reverse()},null,2))"
-```
-
-That's it.
+If you're working with the Claude Code agent in this repo, just say "add a post about X" or "remove the post about Y" — the `posts` skill at `.claude/skills/posts/SKILL.md` handles the file creation, the JSON edit, and the build check.
