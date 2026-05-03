@@ -2,7 +2,7 @@
 
 A messy corner of the internet. Writing, links, videos, photos, projects, stack — all in one stream. Inspired by [taniarascia.com](https://www.taniarascia.com) and [brianlovin.com](https://brianlovin.com).
 
-Built with **Hugo** (for layout inheritance), plain CSS, and a sprinkle of JavaScript. Posts are Markdown files in a folder. No tracking. No CMS. No dark mode — light only, by choice.
+Built with **Hugo** (for layout inheritance), **Tailwind CSS v4**, and a sprinkle of JavaScript. Posts are Markdown files in a folder. No tracking. No CMS. No dark mode — light only, by choice.
 
 Live at **[www.mehdibenfredj.com](https://www.mehdibenfredj.com)**.
 
@@ -87,8 +87,11 @@ cd portfolio
 # Install Hugo (one-time)
 brew install hugo
 
-# Run the local server
-hugo serve
+# Install the Tailwind CLI (one-time)
+npm install
+
+# Run the dev server (Tailwind watch + Hugo server)
+npm run dev
 # → http://localhost:1313
 ```
 
@@ -129,11 +132,17 @@ data/
 
 hugo.toml          Hugo config (title, baseURL, permalinks)
 
+assets/
+  css/
+    app.css        Tailwind entry: @import + @theme tokens + @layer base/components
+
+package.json       npm config — Tailwind CLI + dev/build scripts
+
 static/
   CNAME            custom domain for GitHub Pages
   assets/
-    tokens.css     design tokens (colors, type) + global styles + mobile
-    *.css          per-page styles (index, writing, post, about, …)
+    app.css        compiled Tailwind output (built by `npm run css:build`)
+    *.png, *.jpg   images served as-is
 ```
 
 ---
@@ -238,21 +247,34 @@ This repo deploys to **www.mehdibenfredj.com** via GitHub Pages. A GitHub Action
 
 ## Customizing the design
 
-- **Colors** — `static/assets/tokens.css` (`:root` block). Change `--accent` for a quick re-skin.
-- **Fonts** — Inter (sans) + Source Serif (body) + JetBrains Mono, loaded from Google Fonts in `layouts/_default/baseof.html`.
-- **Page-specific styles** — each page declares `extra_css: /assets/PAGENAME.css` in its front-matter; the layout picks it up automatically.
-- **Mobile** — single breakpoint at 720px (with a tighter one at 420px) at the bottom of `tokens.css`.
+All styling lives in `assets/css/app.css`. Tailwind v4 reads this file, scans the layouts and content for class usage, and compiles `static/assets/app.css`.
+
+- **Colors + fonts** — the `@theme` block at the top. Tokens auto-generate utility classes (`bg-paper`, `text-ink-2`, `font-sans`, …). Change `--color-accent` for a quick re-skin.
+- **Element defaults** — `@layer base` (body, headings, links, `hr`).
+- **Reusable components** — `@layer components` (`.cta`, `.tag`, `.callout`, `.feed`, `.about-hero`, `.sticker`, …). These are the legacy class names from before the Tailwind migration; new markup can use utilities directly instead.
+- **Mobile** — single breakpoint at 720px (and a tighter one at 420px) inline within each component.
+
+### CSS build commands
+
+| Command              | What it does                                                         |
+| -------------------- | -------------------------------------------------------------------- |
+| `npm run css:dev`    | Watch `assets/css/app.css` and rebuild on change                     |
+| `npm run css:build`  | One-shot minified build (used by `npm run build` and CI)             |
+| `npm run dev`        | One-shot CSS build, then Tailwind watch + `hugo server` together     |
+| `npm run build`      | Production build: minified CSS + `hugo --minify`                     |
+
+CI rebuilds `static/assets/app.css` on every deploy via `npm ci && npm run css:build` before `hugo --minify` (see `.github/workflows/deploy.yml`).
 
 ---
 
 ## Local preview
 
-Use Hugo's built-in server — it watches files and live-reloads on save:
-
 ```bash
-hugo serve
+npm run dev
 # → http://localhost:1313
 ```
+
+This runs the Tailwind watcher and `hugo server` together, so both Markdown changes and CSS edits live-reload.
 
 ---
 

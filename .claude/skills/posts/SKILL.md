@@ -13,7 +13,7 @@ This site's home feed is rendered by Hugo from Markdown files in `content/posts/
 
 2. **Write the file** with front-matter + body. For `tweet`, the body *is* the whole post — keep it short. For `post`, write longer-form. For `link` / `video` / `buy` / `photo`, the body is optional commentary. **No HTML in the body** — just plain Markdown.
 
-3. After editing, run `hugo --minify` from the project root to verify the build succeeds. Don't commit unless asked.
+3. After editing, run `hugo --minify` from the project root to verify the build succeeds. Adding a post doesn't introduce new CSS classes, so the precompiled `static/assets/app.css` is sufficient — no need to run `npm run css:build`. Don't commit unless asked.
 
 ### Front-matter shape by feed
 
@@ -98,3 +98,4 @@ Never delete without confirming the match if the user's request is fuzzy ("delet
 - `content/posts/<YYYY-MM-DD-slug>.md` — one file per post, with YAML front-matter + Markdown body
 - `layouts/posts/single.html` — single-post page template (don't edit unless changing layout)
 - `layouts/partials/feed/<feed>.html` — per-feed feed card templates (don't edit unless changing layout)
+- `assets/css/app.css` — Tailwind v4 source (`@theme` tokens + `@layer base/components`). Only touch if a post needs a brand-new style; rebuild with `npm run css:build` if so.
