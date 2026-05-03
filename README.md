@@ -50,7 +50,7 @@ Pages that don't need any dynamic logic (`content/about.html`, `content/contact.
 
 The home, `/writing/`, and `/bookmarks/` pages all read from `content/posts/`. They're plain Hugo templates — no client-side JS for rendering, no `fetch()`, no separate index file.
 
-The home feed dispatches each post to a per-kind partial:
+The home feed dispatches each post to a per-feed partial:
 
 ```
 layouts/partials/feed/
@@ -58,7 +58,7 @@ layouts/partials/feed/
   link.html      video.html   photo.html   buy.html
 ```
 
-To change how `link` cards look, edit `layouts/partials/feed/link.html`. The `_meta.html` partial is the shared meta-row (date + kind tag + tags) used by all cards.
+To change how `link` cards look, edit `layouts/partials/feed/link.html`. The `_meta.html` partial is the shared meta-row (date + feed tag + tags) used by all cards.
 
 Individual post pages (`/posts/<slug>/`) are rendered by `layouts/posts/single.html`.
 
@@ -119,7 +119,7 @@ layouts/
   posts/
     single.html    template for individual post pages (/posts/<slug>/)
   partials/
-    feed/          one partial per kind: thought / post / tweet /
+    feed/          one partial per feed: thought / post / tweet /
                    link / video / photo / buy — each renders one card
   404.html         standalone bare layout (no nav) — 404 page
 
@@ -151,7 +151,7 @@ Everything on the home feed — thoughts, essays, links, videos, photos, things 
    ```markdown
    ---
    date: 2026-05-01
-   kind: thought
+   feed: thought
    title: "My title here"
    tags: [ai, thinking]
    ---
@@ -164,23 +164,23 @@ Everything on the home feed — thoughts, essays, links, videos, photos, things 
 
 That's it. No index file to maintain — Hugo discovers posts by scanning the directory.
 
-**Post kinds** (the `kind:` field in front-matter controls which partial renders the card):
+**Post feeds** (the `feed:` field in front-matter controls which partial renders the card):
 
-| `kind:`   | What it is                | Required front-matter                                    |
+| `feed:`   | What it is                | Required front-matter                                    |
 | --------- | ------------------------- | -------------------------------------------------------- |
-| `thought` | A short reflection        | `date`, `kind`, `title` + body                           |
-| `post`    | A long essay (own page)   | `date`, `kind`, `title` + body                           |
-| `tweet`   | A one-liner, no title     | `date`, `kind` + body                                    |
-| `link`    | Article you want to share | `date`, `kind`, `title`, `url`, `source`                 |
-| `video`   | YouTube link              | `date`, `kind`, `title`, `url`, `source: youtube.com`    |
-| `photo`   | An image                  | `date`, `kind`, `image` (+ optional `title`, body)       |
-| `buy`     | Something you got         | `date`, `kind`, `title`, `url`, `source`                 |
+| `thought` | A short reflection        | `date`, `feed`, `title` + body                           |
+| `post`    | A long essay (own page)   | `date`, `feed`, `title` + body                           |
+| `tweet`   | A one-liner, no title     | `date`, `feed` + body                                    |
+| `link`    | Article you want to share | `date`, `feed`, `title`, `url`, `source`                 |
+| `video`   | YouTube link              | `date`, `feed`, `title`, `url`, `source: youtube.com`    |
+| `photo`   | An image                  | `date`, `feed`, `image` (+ optional `title`, body)       |
+| `buy`     | Something you got         | `date`, `feed`, `title`, `url`, `source`                 |
 
 Optional on any entry: `tags`, `image` (gives links a preview thumbnail).
 
 YouTube thumbnails are generated **at build time** from the `url`.
 
-The home feed (`/`), `/writing/`, and `/bookmarks/` pages all read from the same `content/posts/` directory and filter by `kind`.
+The home feed (`/`), `/writing/`, and `/bookmarks/` pages all read from the same `content/posts/` directory and filter by `feed`.
 
 ### Projects + stack
 

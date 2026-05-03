@@ -1,4 +1,4 @@
-<article class="card" data-kind="photo" data-tags="{{ delimit .Params.tags "," }}">
+<article class="card" data-feed="photo" data-tags="{{ delimit .Params.tags "," }}">
   {{ partial "feed/_meta.html" (dict "page" . "label" "photo") }}
   {{ with .Title }}<h3>{{ . }}</h3>{{ end }}
   <a class="media photo" href="{{ .Params.url | default "#" }}">

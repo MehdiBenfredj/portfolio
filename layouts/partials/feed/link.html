@@ -1,4 +1,4 @@
-<article class="card" data-kind="link" data-tags="{{ delimit .Params.tags "," }}">
+<article class="card" data-feed="link" data-tags="{{ delimit .Params.tags "," }}">
   {{ partial "feed/_meta.html" (dict "page" . "label" "link") }}
   <h3><a href="{{ .Params.url }}">{{ .Title }} <span class="arrow">→</span></a></h3>
   {{ with .Plain | strings.TrimSpace }}<p>{{ . }}</p>{{ end }}

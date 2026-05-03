@@ -1,4 +1,4 @@
-<article class="card" data-kind="thought" data-tags="{{ delimit .Params.tags "," }}">
+<article class="card" data-feed="thought" data-tags="{{ delimit .Params.tags "," }}">
   {{ partial "feed/_meta.html" (dict "page" . "label" "thought") }}
   <h3>{{ .Title }}</h3>
   {{ .Content }}

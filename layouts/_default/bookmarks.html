@@ -16,29 +16,29 @@
   </div>
 
   <div class="feed" id="bookmarks">
-    {{ $items := where (where site.RegularPages "Section" "posts") "Params.kind" "in" (slice "link" "video" "tweet" "buy" "photo") }}
+    {{ $items := where (where site.RegularPages "Section" "posts") "Params.feed" "in" (slice "link" "video" "tweet" "buy" "photo") }}
     {{ range $items.ByDate.Reverse }}
-      {{ $kind := .Params.kind }}
+      {{ $feed := .Params.feed }}
       {{ $url := .Params.url | default "" }}
-      <article class="bm" data-kind="{{ $kind }}">
+      <article class="bm" data-feed="{{ $feed }}">
         <div class="bm-meta">
           <span class="meta">{{ .Date.Format "Jan 2, 2006" }}</span>
-          <span class="tag">{{ $kind }}</span>
+          <span class="tag">{{ $feed }}</span>
           {{ range .Params.tags }}<span class="tag accent">#{{ . }}</span>{{ end }}
         </div>
-        {{ if eq $kind "tweet" }}
+        {{ if eq $feed "tweet" }}
           <p style="font-style: italic; font-size: 1.1rem;">"{{ .Plain | strings.TrimSpace }}"</p>
         {{ else }}
           {{ with .Title }}<h3><a href="{{ $url | default "#" }}">{{ . }} <span class="arrow">→</span></a></h3>{{ end }}
           {{ with .Plain | strings.TrimSpace }}<p>{{ . | truncate 200 }}</p>{{ end }}
-          {{ if eq $kind "photo" }}
+          {{ if eq $feed "photo" }}
             {{ with .Params.image }}
               <a class="media" href="{{ $url | default "#" }}">
                 <img src="{{ . }}" alt="" loading="lazy">
                 {{ with $.Params.source }}<div class="source-bar"><span>{{ . }}</span><span>open →</span></div>{{ end }}
               </a>
             {{ end }}
-          {{ else if eq $kind "video" }}
+          {{ else if eq $feed "video" }}
             {{ $m := findRESubmatch `(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([\w-]{6,})` $url 1 }}
             {{ with $m }}
               {{ $id := index (index . 0) 1 }}
@@ -62,8 +62,8 @@
     document.querySelectorAll('#filters .tag').forEach(x => x.classList.remove('on'));
     t.classList.add('on');
     const f = t.dataset.filter;
-    document.querySelectorAll('#bookmarks > [data-kind]').forEach(card => {
-      card.style.display = (f === 'all' || card.dataset.kind === f) ? '' : 'none';
+    document.querySelectorAll('#bookmarks > [data-feed]').forEach(card => {
+      card.style.display = (f === 'all' || card.dataset.feed === f) ? '' : 'none';
     });
   });
 </script>

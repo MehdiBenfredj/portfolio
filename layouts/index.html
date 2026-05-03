@@ -39,8 +39,8 @@
 
 <section class="feed" id="feed">
   {{ range (where site.RegularPages "Section" "posts").ByDate.Reverse }}
-    {{ $kind := .Params.kind | default "thought" }}
-    {{ partial (printf "feed/%s.html" $kind) . }}
+    {{ $feed := .Params.feed | default "thought" }}
+    {{ partial (printf "feed/%s.html" $feed) . }}
   {{ end }}
 </section>
 
@@ -53,8 +53,8 @@
     document.querySelectorAll('#filters .tag').forEach(x => x.classList.remove('on'));
     t.classList.add('on');
     const f = t.dataset.filter;
-    document.querySelectorAll('#feed > [data-kind]').forEach(card => {
-      card.style.display = (f === 'all' || card.dataset.kind === f) ? '' : 'none';
+    document.querySelectorAll('#feed > [data-feed]').forEach(card => {
+      card.style.display = (f === 'all' || card.dataset.feed === f) ? '' : 'none';
     });
   });
 </script>

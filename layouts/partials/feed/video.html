@@ -4,7 +4,7 @@
   {{ $m := findRESubmatch `(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([\w-]{6,})` $url 1 }}
   {{ with $m }}{{ $id = index (index . 0) 1 }}{{ end }}
 {{ end }}
-<article class="card" data-kind="video" data-tags="{{ delimit .Params.tags "," }}">
+<article class="card" data-feed="video" data-tags="{{ delimit .Params.tags "," }}">
   {{ partial "feed/_meta.html" (dict "page" . "label" "video") }}
   <h3><a href="{{ $url }}">{{ .Title }} <span class="arrow">→</span></a></h3>
   {{ with .Plain | strings.TrimSpace }}<p>{{ . }}</p>{{ end }}

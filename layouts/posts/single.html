@@ -3,7 +3,7 @@
   <a class="back" href="/writing/">← writing</a>
   <div class="post-meta" style="margin-top: 1rem;">
     <span class="meta">{{ .Date.Format "Jan 2, 2006" }}</span>
-    <span class="tag">{{ .Params.kind }}</span>
+    <span class="tag">{{ .Params.feed }}</span>
     {{ range .Params.tags }}<span class="tag accent">#{{ . }}</span>{{ end }}
   </div>
   <h1>{{ with .Title }}{{ . }}{{ else }}(untitled){{ end }}</h1>
@@ -11,7 +11,7 @@
   {{ with .Params.url }}
     <div class="external">
       <a href="{{ . }}" target="_blank" rel="noopener">
-        {{ if eq $.Params.kind "video" }}watch on{{ else }}read on{{ end }} {{ with $.Params.source }}{{ . }}{{ else }}source{{ end }} →
+        {{ if eq $.Params.feed "video" }}watch on{{ else }}read on{{ end }} {{ with $.Params.source }}{{ . }}{{ else }}source{{ end }} →
       </a>
     </div>
   {{ end }}
