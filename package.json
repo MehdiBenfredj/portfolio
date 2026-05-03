@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "scripts": {
+    "css:dev": "tailwindcss -i ./assets/css/app.css -o ./static/assets/app.css --watch",
+    "css:build": "tailwindcss -i ./assets/css/app.css -o ./static/assets/app.css --minify",
+    "dev": "npm run css:build && (npm run css:dev & hugo server)",
+    "build": "npm run css:build && hugo --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0"
+  }
+}
