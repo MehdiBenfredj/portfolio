@@ -1,7 +1,0 @@
-.post { border-top: 1px solid var(--rule); padding: 1.6rem 0; }
-.post h3 { font-family: var(--sans); font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 6px; }
-.post h3 a { color: inherit; text-decoration: none; }
-.post h3 a:hover { color: var(--accent); background: transparent; }
-.post p { color: var(--ink-2); margin: 8px 0 0; }
-.post-meta { display: flex; gap: 10px; align-items: center; }
-.group-head { margin: 3rem 0 1rem; font-family: var(--sans); color: var(--ink-3); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; }

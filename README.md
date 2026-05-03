@@ -8,6 +8,45 @@ Live at **[www.mehdibenfredj.com](https://www.mehdibenfredj.com)**.
 
 ---
 
+## How it works (Hugo + GitHub Pages)
+
+Hugo is a static site generator. It takes the source files in this repo and produces a folder of plain HTML/CSS/JS that any web server can serve. The flow:
+
+1. **You edit source files** — `content/`, `layouts/`, `static/`, `hugo.toml`.
+2. **Hugo builds** — running `hugo` (locally) or the GitHub Action (on push) reads those sources and writes the rendered site into `public/`.
+3. **GitHub Pages serves `public/`** — the Action uploads that folder as the Pages artifact and deploys it to `www.mehdibenfredj.com`.
+
+### The `public/` folder is build output — never edit it
+
+`public/` is **regenerated from scratch on every build**. Anything in there that didn't come from `content/`, `layouts/`, `static/`, or `hugo.toml` will be wiped on the next build.
+
+This repo `.gitignore`s `public/` so it isn't tracked in git. If you find yourself wanting to edit a file in `public/`, that's a sign you're editing the wrong place — find the source under `static/`, `content/`, or `layouts/` and edit that instead.
+
+For example: `static/assets/data.js` is the source; `public/assets/data.js` is a copy Hugo makes during build. Editing the copy does nothing — the next build overwrites it.
+
+### What goes where
+
+| Source              | What Hugo does with it                                          |
+| ------------------- | --------------------------------------------------------------- |
+| `content/*.html`    | Wrapped with `layouts/_default/baseof.html`, rendered to a page |
+| `layouts/`          | Templates — control page structure, head, nav, footer           |
+| `static/`           | Copied **as-is** into `public/` (CSS, JS, images, posts, CNAME) |
+| `hugo.toml`         | Site config (title, baseURL, etc.)                              |
+
+### The deploy pipeline
+
+`.github/workflows/deploy.yml` runs on every push to `main`:
+
+1. Checks out the repo
+2. Installs Hugo (extended, pinned version)
+3. Runs `hugo --minify` → produces `public/`
+4. Uploads `public/` as a Pages artifact
+5. Deploys it to GitHub Pages
+
+Total time: ~30 seconds. Watch it in the **Actions** tab.
+
+---
+
 ## Quick start
 
 ```bash
