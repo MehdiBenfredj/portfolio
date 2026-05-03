@@ -1,1 +1,61 @@
-{{ define "main" }}{{ .Content | safeHTML }}{{ end }}
+{{ define "main" }}
+<section class="hero">
+  <div>
+    <p class="meta" style="margin-bottom: 12px;">est. 2026 · personal mess · vol. 01 ✦</p>
+    <h1>
+      hey <span class="wave">👋</span><br>
+      welcome to the<br>
+      <em>mess</em>.
+    </h1>
+    <p class="hero-lede">
+      I'm <b>Mehdi</b>. ⚽️ football, 🤖 AI, 📚 books, 🌶 spicy takes — all in one feed.
+      Nothing sorted by topic. That's kind of the point.
+    </p>
+    <div class="pill-row">
+      <a href="#feed" class="cta primary">↓ scroll the feed</a>
+      <a href="/about/" class="cta">👋 about me</a>
+      <a href="/stack/" class="cta">⚙️ what I use</a>
+    </div>
+  </div>
+</section>
+
+<hr style="max-width: 1100px; margin: 1rem auto;">
+
+<div class="feed-head feed">
+  <h2 class="section"><span class="badge">📡</span> the feed</h2>
+  <p class="meta">everything, mixed</p>
+</div>
+
+<div class="filters" id="filters">
+  <span class="tag on" data-filter="all">✨ all</span>
+  <span class="tag" data-filter="thought">💭 thoughts</span>
+  <span class="tag" data-filter="link">🔗 links</span>
+  <span class="tag" data-filter="video">📺 videos</span>
+  <span class="tag" data-filter="post">✍️ essays</span>
+  <span class="tag" data-filter="tweet">💬 notes</span>
+  <span class="tag" data-filter="buy">🛒 things</span>
+  <span class="tag" data-filter="photo">📸 photos</span>
+</div>
+
+<section class="feed" id="feed">
+  {{ range (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+    {{ $kind := .Params.kind | default "thought" }}
+    {{ partial (printf "feed/%s.html" $kind) . }}
+  {{ end }}
+</section>
+
+<p class="feed-end">✦ ✦ ✦ &nbsp; that's all for now. write me. &nbsp; ✦ ✦ ✦</p>
+
+<script>
+  document.getElementById('filters').addEventListener('click', (e) => {
+    const t = e.target.closest('[data-filter]');
+    if (!t) return;
+    document.querySelectorAll('#filters .tag').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    const f = t.dataset.filter;
+    document.querySelectorAll('#feed > [data-kind]').forEach(card => {
+      card.style.display = (f === 'all' || card.dataset.kind === f) ? '' : 'none';
+    });
+  });
+</script>
+{{ end }}

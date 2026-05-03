@@ -1,0 +1,4 @@
+<article class="card" data-kind="tweet" data-tags="{{ delimit .Params.tags "," }}">
+  {{ partial "feed/_meta.html" (dict "page" . "label" "note") }}
+  <p class="tweet">"{{ .Plain | strings.TrimSpace }}"</p>
+</article>

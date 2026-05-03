@@ -5,31 +5,29 @@ description: Add or remove a post on Mehdi's portfolio site (the home feed). Use
 
 # Posts skill
 
-This site's home feed is driven by Markdown files in `static/posts/` plus a single index file at `static/posts/index.json`. There is **no front-matter** in the post files — all metadata lives in `index.json`.
+This site's home feed is rendered by Hugo from Markdown files in `content/posts/`. Each post is a single file with **YAML front-matter** holding the metadata, followed by the Markdown body. There is no separate index file — Hugo discovers posts by scanning the directory.
 
 ## Adding a post
 
-1. **Pick a filename**: `static/posts/YYYY-MM-DD-slug.md` where the date is today (or whatever the user says) and the slug is 2–5 lowercase words joined by hyphens. Confirm the slug with the user only if it's ambiguous.
+1. **Pick a filename**: `content/posts/YYYY-MM-DD-slug.md` where the date is today (or whatever the user says) and the slug is 2–5 lowercase words joined by hyphens. The slug becomes the URL: `/posts/<slug>/`. Confirm the slug with the user only if it's ambiguous.
 
-2. **Write the body** as plain Markdown in that file. No front-matter. For `tweet` kind, the body *is* the whole post — keep it short. For `post` kind, write longer-form. For `link` / `video` / `buy` / `photo`, the body is optional commentary.
+2. **Write the file** with front-matter + body. For `tweet`, the body *is* the whole post — keep it short. For `post`, write longer-form. For `link` / `video` / `buy` / `photo`, the body is optional commentary. **No HTML in the body** — just plain Markdown.
 
-3. **Prepend a new entry** to the `posts` array in `static/posts/index.json` (newest entries go first — the array is in reverse-chronological order).
+3. After editing, run `hugo --minify` from the project root to verify the build succeeds. Don't commit unless asked.
 
-4. After editing, run `hugo --minify` from the project root to verify the build succeeds. Don't commit unless asked.
-
-### Entry shape by kind
+### Front-matter shape by kind
 
 Required fields are marked **bold**. Optional fields can be omitted.
 
-| `kind`    | What it is                  | Fields                                                                                  |
-| --------- | --------------------------- | --------------------------------------------------------------------------------------- |
-| `thought` | Short reflection            | **`file`**, **`date`**, **`kind`**, **`title`**, `tags`                                 |
-| `post`    | Long essay (own page)       | **`file`**, **`date`**, **`kind`**, **`title`**, `tags`                                 |
-| `tweet`   | One-liner, no title         | **`file`**, **`date`**, **`kind`**, `tags`                                              |
-| `link`    | Article link                | **`file`**, **`date`**, **`kind`**, **`title`**, **`url`**, **`source`**, `image`, `tags` |
-| `video`   | YouTube link                | **`file`**, **`date`**, **`kind`**, **`title`**, **`url`**, **`source: youtube.com`**, `tags` (thumbnail auto-derived from `url`) |
-| `photo`   | Image post                  | **`file`**, **`date`**, **`kind`**, **`image`**, `title`, `tags`                        |
-| `buy`     | Thing acquired              | **`file`**, **`date`**, **`kind`**, **`title`**, **`url`**, **`source`**, `tags`        |
+| `kind`    | What it is                  | Fields                                                                                                       |
+| --------- | --------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `thought` | Short reflection            | **`date`**, **`kind`**, **`title`**, `tags`                                                                  |
+| `post`    | Long essay (own page)       | **`date`**, **`kind`**, **`title`**, `tags`                                                                  |
+| `tweet`   | One-liner, no title         | **`date`**, **`kind`**, `tags`                                                                               |
+| `link`    | Article link                | **`date`**, **`kind`**, **`title`**, **`url`**, **`source`**, `image`, `tags`                                |
+| `video`   | YouTube link                | **`date`**, **`kind`**, **`title`**, **`url`**, **`source: youtube.com`**, `tags` (thumbnail auto-derived from `url`) |
+| `photo`   | Image post                  | **`date`**, **`kind`**, **`image`**, `title`, `tags`                                                         |
+| `buy`     | Thing acquired              | **`date`**, **`kind`**, **`title`**, **`url`**, **`source`**, `tags`                                         |
 
 `source` is a short host label like `youtube.com`, `nyt.com`, `arxiv.org`, `amazon.com` — not the full URL.
 
@@ -51,42 +49,52 @@ If genuinely ambiguous, ask one quick clarifying question.
 
 User: *"Add a post: I keep noticing that the best engineers I know read more than they write."*
 
-```jsonc
-// New entry to prepend in static/posts/index.json
-{
-  "file": "2026-05-02-engineers-read-more.md",
-  "date": "2026-05-02",
-  "kind": "thought",
-  "title": "Engineers read more than they write",
-  "tags": ["engineering", "thinking"]
-}
-```
+Create `content/posts/2026-05-02-engineers-read-more.md`:
 
 ```markdown
-<!-- static/posts/2026-05-02-engineers-read-more.md -->
+---
+date: 2026-05-02
+kind: thought
+title: "Engineers read more than they write"
+tags: [engineering, thinking]
+---
+
 The best engineers I know read more than they write — code, papers, postmortems. Output is downstream of input.
+```
+
+### Example: adding a link
+
+```markdown
+---
+date: 2026-05-02
+kind: link
+title: "On the dangers of stochastic parrots"
+url: "https://dl.acm.org/doi/10.1145/3442188.3445922"
+source: "dl.acm.org"
+tags: [ai, ethics]
+---
+
+Worth re-reading. The framing aged better than I expected.
 ```
 
 ## Removing a post
 
-1. **Find the entry**. Search `static/posts/index.json` for the user's description (title keywords, slug, kind, date). If multiple match, list them and ask which one.
-2. **Delete the markdown file** under `static/posts/`.
-3. **Remove the entry** from the `posts` array in `static/posts/index.json`.
-4. Run `hugo --minify` to verify.
+1. **Find the file**. Search `content/posts/` for the user's description (filename slug, title in front-matter, or body keyword). If multiple match, list them and ask which one.
+2. **Delete the file** under `content/posts/`.
+3. Run `hugo --minify` to verify the build still passes.
 
 Never delete without confirming the match if the user's request is fuzzy ("delete that thing about football"). Echo back the title + date and ask before deleting.
 
 ## Conventions to preserve
 
-- Keep `index.json` valid JSON — watch trailing commas after edits.
-- Keep entries sorted newest-first by `date`. When inserting, place the new entry at the position matching its date.
+- Keep front-matter valid YAML. Quote titles that contain colons or other special chars.
 - Use today's date by default. Don't invent future dates. Today's date is available in conversation context.
-- Tags are lowercase, no spaces, dash-separated if multi-word (e.g. `["ai", "model-evals"]`).
-- Slugs are lowercase, hyphenated, 2–5 words.
+- Tags are lowercase, no spaces, dash-separated if multi-word (e.g. `[ai, model-evals]`).
+- Slugs are lowercase, hyphenated, 2–5 words. Filename date prefix must match the `date:` field.
 - Don't add fields the kind doesn't need. Extra noise hurts more than missing optional fields.
 
 ## Files involved
 
-- `static/posts/index.json` — feed metadata, the source of truth for ordering and rendering
-- `static/posts/<file>.md` — body content (no front-matter)
-- `static/posts/README.md` — outdated; ignore the front-matter section there. The index.json is authoritative.
+- `content/posts/<YYYY-MM-DD-slug>.md` — one file per post, with YAML front-matter + Markdown body
+- `layouts/posts/single.html` — single-post page template (don't edit unless changing layout)
+- `layouts/partials/feed/<kind>.html` — per-kind feed card templates (don't edit unless changing layout)

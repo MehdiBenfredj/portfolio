@@ -26,12 +26,43 @@ For example: `static/assets/data.js` is the source; `public/assets/data.js` is a
 
 ### What goes where
 
-| Source              | What Hugo does with it                                          |
-| ------------------- | --------------------------------------------------------------- |
-| `content/*.html`    | Wrapped with `layouts/_default/baseof.html`, rendered to a page |
-| `layouts/`          | Templates — control page structure, head, nav, footer           |
-| `static/`           | Copied **as-is** into `public/` (CSS, JS, images, posts, CNAME) |
-| `hugo.toml`         | Site config (title, baseURL, etc.)                              |
+| Source                  | What Hugo does with it                                                              |
+| ----------------------- | ----------------------------------------------------------------------------------- |
+| `content/*.html`        | Wrapped with `layouts/_default/baseof.html` (or a custom `layout:` from front-matter), rendered to a page |
+| `content/posts/*.md`    | One feed entry each. Front-matter holds metadata, body holds markdown               |
+| `layouts/`              | Templates — control page structure and **all** dynamic logic (see below)            |
+| `data/`                 | Structured data (TOML/YAML/JSON) read by templates at build time                    |
+| `static/`               | Copied **as-is** into `public/` (CSS, JS, images, CNAME)                            |
+| `hugo.toml`             | Site config (title, baseURL, permalinks, etc.)                                      |
+
+### Important: dynamic logic goes in `layouts/`, not `content/`
+
+Hugo does **not** process Go template syntax (`{{ ... }}`) inside `content/*.html` files. Content bodies are inserted into the layout as static strings. If you put a `{{ range ... }}` inside `content/projects.html`, it will appear literally in the rendered page.
+
+So this site uses a "thin content, fat layout" pattern for any page that needs dynamic rendering:
+
+- `content/projects.html` is just front-matter (`title`, `active_nav`, `layout: projects`).
+- `layouts/_default/projects.html` does all the work — it iterates `data/projects.toml` and renders the cards.
+
+Pages that don't need any dynamic logic (`content/about.html`, `content/contact.html`) keep their full HTML body and use the default `layouts/_default/single.html`, which just emits `{{ .Content | safeHTML }}`.
+
+### How the feed renders
+
+The home, `/writing/`, and `/bookmarks/` pages all read from `content/posts/`. They're plain Hugo templates — no client-side JS for rendering, no `fetch()`, no separate index file.
+
+The home feed dispatches each post to a per-kind partial:
+
+```
+layouts/partials/feed/
+  thought.html   tweet.html   post.html
+  link.html      video.html   photo.html   buy.html
+```
+
+To change how `link` cards look, edit `layouts/partials/feed/link.html`. The `_meta.html` partial is the shared meta-row (date + kind tag + tags) used by all cards.
+
+Individual post pages (`/posts/<slug>/`) are rendered by `layouts/posts/single.html`.
+
+Filter pills on the home and bookmarks pages stay client-side (a few lines of JS that toggle `display:none` on `[data-kind]` cards).
 
 ### The deploy pipeline
 
@@ -66,44 +97,43 @@ hugo serve
 ## Project structure
 
 ```
+content/
+  _index.html      home — front-matter only; layout renders the feed
+  writing.html     front-matter only; layout renders the writing list
+  projects.html    front-matter only; layout renders projects from data/
+  stack.html       front-matter only; layout renders stack from data/
+  bookmarks.html   front-matter only; layout renders the bookmarks feed
+  about.html       static HTML body (no template logic)
+  contact.html     static HTML body (no template logic)
+  posts/           one Markdown file per feed entry (front-matter + body)
+
 layouts/
   _default/
     baseof.html    shared layout: <head>, header, nav, footer
-    single.html    wraps content pages with baseof.html
-  index.html       wraps the home page with baseof.html
+    single.html    minimal — for content pages with static HTML body
+    writing.html   selected via `layout: writing` — renders writing list
+    bookmarks.html selected via `layout: bookmarks` — renders bookmarks
+    projects.html  selected via `layout: projects` — reads data/projects.toml
+    stack.html     selected via `layout: stack` — reads data/stack.toml
+  index.html       homepage — renders hero + the mixed feed
+  posts/
+    single.html    template for individual post pages (/posts/<slug>/)
+  partials/
+    feed/          one partial per kind: thought / post / tweet /
+                   link / video / photo / buy — each renders one card
   404.html         standalone bare layout (no nav) — 404 page
 
-content/
-  _index.html      home — the mixed feed (everything, reverse-chrono)
-  writing.html     longer-form essays + thoughts
-  post.html        single-post viewer (?slug=YYYY-MM-DD-slug)
-  projects.html    things I made
-  stack.html       hardware, software, services I use
-  bookmarks.html   filtered feed: links / videos / tweets / buys
-  about.html       about me
-  contact.html     say hi
+data/
+  projects.toml    projects shown at /projects/
+  stack.toml       hardware/software/services shown at /stack/
 
-hugo.toml          Hugo config (title, baseURL, uglyURLs)
+hugo.toml          Hugo config (title, baseURL, permalinks)
 
 static/
   CNAME            custom domain for GitHub Pages
-  posts/
-    index.json     post metadata (date, kind, title, tags, url, etc.)
-    README.md      full guide for adding posts
-    *.md           post body content (no front-matter)
   assets/
     tokens.css     design tokens (colors, type) + global styles + mobile
-    index.css      home page styles
-    writing.css    writing page styles
-    post.css       single-post viewer styles
-    about.css      about page styles
-    contact.css    contact page styles
-    projects.css   projects page styles
-    stack.css      stack page styles
-    bookmarks.css  bookmarks page styles
-    404.css        404 page styles
-    posts.js       markdown loader + renderer
-    data.js        projects + stack data
+    *.css          per-page styles (index, writing, post, about, …)
 ```
 
 ---
@@ -112,55 +142,65 @@ static/
 
 ### Posts (the home feed)
 
-Everything on the home feed — thoughts, essays, links, videos, photos, things you bought, one-liner notes — is a Markdown file in `static/posts/`.
+Everything on the home feed — thoughts, essays, links, videos, photos, things you bought, one-liner notes — is a single Markdown file in `content/posts/` with YAML front-matter.
 
 **To add a post:**
 
-1. Create a new file in `static/posts/` named `YYYY-MM-DD-some-slug.md`. Write plain Markdown — **no front-matter**.
+1. Create `content/posts/YYYY-MM-DD-slug.md`. The file's slug becomes its URL: `/posts/<slug>/`.
 
    ```markdown
+   ---
+   date: 2026-05-01
+   kind: thought
+   title: "My title here"
+   tags: [ai, thinking]
+   ---
+
    Your body in markdown. **Bold**, _italic_, [links](https://example.com),
    lists, headings, code blocks — all supported.
    ```
 
-2. Add an entry to `static/posts/index.json`:
+2. Commit + push. GitHub Actions builds Hugo and deploys in ~30 seconds.
 
-   ```json
-   {
-     "file": "2026-05-01-my-post.md",
-     "date": "2026-05-01",
-     "kind": "thought",
-     "title": "My title here",
-     "tags": ["ai", "thinking"]
-   }
-   ```
+That's it. No index file to maintain — Hugo discovers posts by scanning the directory.
 
-3. Commit + push. GitHub Actions builds and deploys in ~30 seconds.
+**Post kinds** (the `kind:` field in front-matter controls which partial renders the card):
 
-**Post kinds** (controls how it renders):
+| `kind:`   | What it is                | Required front-matter                                    |
+| --------- | ------------------------- | -------------------------------------------------------- |
+| `thought` | A short reflection        | `date`, `kind`, `title` + body                           |
+| `post`    | A long essay (own page)   | `date`, `kind`, `title` + body                           |
+| `tweet`   | A one-liner, no title     | `date`, `kind` + body                                    |
+| `link`    | Article you want to share | `date`, `kind`, `title`, `url`, `source`                 |
+| `video`   | YouTube link              | `date`, `kind`, `title`, `url`, `source: youtube.com`    |
+| `photo`   | An image                  | `date`, `kind`, `image` (+ optional `title`, body)       |
+| `buy`     | Something you got         | `date`, `kind`, `title`, `url`, `source`                 |
 
-| `kind:`   | What it is                | Required fields                       |
-| --------- | ------------------------- | ------------------------------------- |
-| `thought` | A short reflection        | `title`, body                         |
-| `post`    | A long essay (own page)   | `title`, body                         |
-| `tweet`   | A one-liner, no title     | body                                  |
-| `link`    | Article you want to share | `title`, `url`, `source`              |
-| `video`   | YouTube link              | `title`, `url`, `source: youtube.com` |
-| `photo`   | An image                  | `image`, optional `title`, body       |
-| `buy`     | Something you got         | `title`, `url`, `source`              |
+Optional on any entry: `tags`, `image` (gives links a preview thumbnail).
 
-Optional fields on any entry: `tags`, `image` (gives links a preview thumbnail).
+YouTube thumbnails are generated **at build time** from the `url`.
 
-YouTube thumbnails are generated automatically from the `url`.
-
-Full guide: see [`static/posts/README.md`](static/posts/README.md).
+The home feed (`/`), `/writing/`, and `/bookmarks/` pages all read from the same `content/posts/` directory and filter by `kind`.
 
 ### Projects + stack
 
-These live in `static/assets/data.js`:
+These live in `data/`:
 
-- `PROJECTS` — your projects list (shown on `projects.html`)
-- `STACK` — hardware/software/services (shown on `stack.html`)
+- `data/projects.toml` — your projects list (rendered at `/projects/`)
+- `data/stack.toml` — hardware/software/services (rendered at `/stack/`)
+
+Both are read at build time by `layouts/_default/projects.html` and `layouts/_default/stack.html` and rendered server-side. No client-side JS.
+
+To add a project, edit `data/projects.toml`:
+
+```toml
+[[projects]]
+name = "My new thing"
+year = "2026"
+desc = "What it does."
+href = "https://example.com"
+tag = "active"   # active | shipped | archived
+```
 
 ### Bio, contact, about
 
@@ -207,7 +247,7 @@ This repo deploys to **www.mehdibenfredj.com** via GitHub Pages. A GitHub Action
 
 ## Local preview
 
-The site uses `fetch()` to load Markdown, so opening `index.html` directly via `file://` won't work. Use Hugo's built-in server:
+Use Hugo's built-in server — it watches files and live-reloads on save:
 
 ```bash
 hugo serve

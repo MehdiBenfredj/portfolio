@@ -1,0 +1,27 @@
+{{ define "main" }}
+<main class="wrap">
+  <p class="meta">writing</p>
+  <h1 class="section"><span class="badge">✍️</span> Notes & essays.</h1>
+  <p style="font-size: 1.2rem; color: var(--ink-2); margin: 1rem 0 2rem;">
+    Longer-form things. About software, AI, the news, and whatever's on my mind. No editor. No SEO. Just me thinking out loud. 🌱
+  </p>
+
+  <div id="posts">
+    {{ $posts := where (where site.RegularPages "Section" "posts") "Params.kind" "in" (slice "post" "thought") }}
+    {{ range $posts.GroupByDate "2006" }}
+      <div class="group-head">{{ .Key }}</div>
+      {{ range .Pages.ByDate.Reverse }}
+        <article class="post">
+          <div class="post-meta">
+            <span class="meta">{{ .Date.Format "Jan 2, 2006" }}</span>
+            <span class="tag">{{ if eq .Params.kind "post" }}essay{{ else }}note{{ end }}</span>
+            {{ range .Params.tags }}<span class="tag accent">#{{ . }}</span>{{ end }}
+          </div>
+          <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+          <p>{{ .Plain | strings.TrimSpace | truncate 180 }}</p>
+        </article>
+      {{ end }}
+    {{ end }}
+  </div>
+</main>
+{{ end }}

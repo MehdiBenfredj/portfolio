@@ -1,0 +1,7 @@
+{{- $label := .label -}}
+{{- $page := .page -}}
+<div class="meta-row">
+  <span class="meta">{{ $page.Date.Format "Jan 2, 2006" }}</span>
+  <span class="tag">{{ $label }}</span>
+  {{ range $page.Params.tags }}<span class="tag accent">#{{ . }}</span>{{ end }}
+</div>

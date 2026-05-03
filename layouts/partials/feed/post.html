@@ -1,0 +1,6 @@
+<article class="card" data-kind="post" data-tags="{{ delimit .Params.tags "," }}">
+  {{ partial "feed/_meta.html" (dict "page" . "label" "essay") }}
+  <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+  <p>{{ .Plain | strings.TrimSpace | truncate 200 }}</p>
+  <a href="{{ .Permalink }}" class="tag" style="margin-top:8px;display:inline-block;">read →</a>
+</article>

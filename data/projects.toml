@@ -1,0 +1,27 @@
+[[projects]]
+name = "Tailor"
+year = "2026"
+desc = "Paste a LinkedIn job URL — title and employer fill automatically, then your resume is scored and tailored."
+href = "https://tailor.mehdibenfredj.com"
+tag = "active"
+
+[[projects]]
+name = "DiskVu"
+year = "2026"
+desc = "A fast, interactive TUI disk analyzer for the terminal — inspired by DaisyDisk, built for the command line. Works on macOS, Linux, and headless EC2/SSH sessions."
+href = "https://github.com/MehdiBenfredj/DiskVu"
+tag = "shipped"
+
+[[projects]]
+name = "Enroln Email"
+year = "2025"
+desc = "Fast, parallel email analyzer in Golang, using goroutines. 517k emails analyzed in under 40 seconds"
+href = "https://github.com/MehdiBenfredj/enron_email"
+tag = "archived"
+
+[[projects]]
+name = "Transferase"
+year = "2024"
+desc = "Move your playlists between different streaming services. Killed because of google APIs limits 😭"
+href = "https://github.com/MehdiBenfredj/transferase_backend"
+tag = "archived"

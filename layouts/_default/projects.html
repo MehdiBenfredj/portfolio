@@ -1,0 +1,29 @@
+{{ define "main" }}
+<main class="wrap">
+  <p class="meta">projects</p>
+  <h1 class="section"><span class="badge">🛠</span> Things I made.</h1>
+  <p style="font-size: 1.2rem; color: var(--ink-2); margin: 1rem 0 2rem;">
+    A mix of shipped products 🚀, weekend hacks ⚡️, and experiments that got out of hand 🌪. Some still alive,
+    some I killed on purpose. All taught me something.
+  </p>
+
+  <div class="callout">
+    Want to build something together? <a href="/contact/" style="color: var(--paper); text-decoration: underline;">say hi →</a>
+  </div>
+
+  <div id="projects">
+    {{ range hugo.Data.projects.projects }}
+      <div class="proj">
+        <div class="year">{{ .year }}</div>
+        <div>
+          <h3><a href="{{ .href }}">{{ .name }} →</a></h3>
+          <p>{{ .desc }}</p>
+        </div>
+        <div class="status {{ .tag }}">{{ .tag }}</div>
+      </div>
+    {{ end }}
+  </div>
+
+  <p style="margin-top: 3rem;" class="meta">also see: <a href="https://github.com/mehdibenfredj">github</a> for the full mess</p>
+</main>
+{{ end }}

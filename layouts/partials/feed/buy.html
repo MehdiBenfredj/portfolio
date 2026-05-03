@@ -1,0 +1,12 @@
+<article class="card" data-kind="buy" data-tags="{{ delimit .Params.tags "," }}">
+  {{ partial "feed/_meta.html" (dict "page" . "label" "thing") }}
+  <h3><a href="{{ .Params.url }}">{{ .Title }} <span class="arrow">→</span></a></h3>
+  {{ with .Plain | strings.TrimSpace }}<p>{{ . }}</p>{{ end }}
+  {{ with .Params.image }}
+    <a class="media" href="{{ $.Params.url | default "#" }}">
+      <img src="{{ . }}" alt="" loading="lazy">
+      {{ with $.Params.source }}<div class="source-bar"><span>{{ . }}</span><span>open →</span></div>{{ end }}
+    </a>
+  {{ end }}
+  {{ with .Params.source }}<p class="meta" style="margin-top:8px;">via {{ . }}</p>{{ end }}
+</article>

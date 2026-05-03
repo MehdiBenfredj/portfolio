@@ -1,0 +1,31 @@
+[[groups]]
+group = "Hardware"
+items = [
+  { name = "MacBook Pro", note = "daily driver" },
+  { name = "DELL monitor", note = "old as hell 🔥" },
+  { name = "Logitech G915 TKL", note = "⌨️" },
+  { name = "Logitech G502 hero", note = "🖱️" },
+  { name = "Beats Studio 3 🎧", note = "" },
+  { name = "LG Evo OLED C5 65 📺", note = "Best in the game" },
+]
+
+[[groups]]
+group = "Software"
+items = [
+  { name = "VS Code", note = "main editor" },
+  { name = "iTerm2", note = "terminal" },
+  { name = "Zen", note = "main browser 🌐" },
+  { name = "Raycast", note = "launcher" },
+  { name = "Obsidian", note = "notes 📝 & knowledge base" },
+  { name = "OpenClaw 🦞", note = "my buddies 🤖 live there" },
+  { name = "Canva", note = "design" },
+  { name = "GitHub Mobile", note = "checking on code 👨‍💻" },
+  { name = "IONOS", note = "domains 🌐" },
+  { name = "Proton VPN", note = "VPN 🛜" },
+  { name = "Proton pass", note = "pwd manager 🔐" },
+  { name = "uBlock Origin", note = "🚫" },
+  { name = "SponsoBlock", note = "🙅" },
+  { name = "Todoist", note = "todos ✅" },
+  { name = "Substack 📝", note = "hidden gems 💎" },
+  { name = "Reddit", note = "love hanging out there" },
+]

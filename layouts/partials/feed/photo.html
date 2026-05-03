@@ -1,0 +1,9 @@
+<article class="card" data-kind="photo" data-tags="{{ delimit .Params.tags "," }}">
+  {{ partial "feed/_meta.html" (dict "page" . "label" "photo") }}
+  {{ with .Title }}<h3>{{ . }}</h3>{{ end }}
+  <a class="media photo" href="{{ .Params.url | default "#" }}">
+    <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+    {{ with .Params.source }}<div class="source-bar"><span>{{ . }}</span><span>open →</span></div>{{ end }}
+  </a>
+  {{ with .Plain | strings.TrimSpace }}<p style="margin-top:10px;">{{ . }}</p>{{ end }}
+</article>

@@ -26,16 +26,13 @@
   <a href="/" class="brand"><img src="/assets/mehdi_ghibli_round_very_small.png" alt="Mehdi" class="brand-avatar"> Mehdi</a>
   <nav>
     <a href="/"{{ if eq .Params.active_nav "stream" }} class="active"{{ end }}>🏠 stream</a>
-    <a href="/writing.html"{{ if eq .Params.active_nav "writing" }} class="active"{{ end }}>✍️ writing</a>
-    <a href="/projects.html"{{ if eq .Params.active_nav "projects" }} class="active"{{ end }}>🛠 projects</a>
-    <a href="/stack.html"{{ if eq .Params.active_nav "stack" }} class="active"{{ end }}>⚙️ stack</a>
-    <a href="/bookmarks.html"{{ if eq .Params.active_nav "bookmarks" }} class="active"{{ end }}>🔖 bookmarks</a>
-    <a href="/about.html"{{ if eq .Params.active_nav "about" }} class="active"{{ end }}>👋 about</a>
+    <a href="/writing/"{{ if or (eq .Params.active_nav "writing") (eq .Section "posts") }} class="active"{{ end }}>✍️ writing</a>
+    <a href="/projects/"{{ if eq .Params.active_nav "projects" }} class="active"{{ end }}>🛠 projects</a>
+    <a href="/stack/"{{ if eq .Params.active_nav "stack" }} class="active"{{ end }}>⚙️ stack</a>
+    <a href="/bookmarks/"{{ if eq .Params.active_nav "bookmarks" }} class="active"{{ end }}>🔖 bookmarks</a>
+    <a href="/about/"{{ if eq .Params.active_nav "about" }} class="active"{{ end }}>👋 about</a>
   </nav>
 </header>
-
-<script src="/assets/posts.js"></script>
-<script src="/assets/data.js"></script>
 
 {{ block "main" . }}{{ end }}
 
