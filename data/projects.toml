@@ -1,16 +1,23 @@
 [[projects]]
+name = "Daily newspaper"
+year = "2026"
+desc = "Daily Newsletter is a static HTML/CSS archive for Mehdi’s curated daily newsletter, automatically published to GitHub Pages with GitHub Actions. It uses an idiomatic Go CLI to collect, enrich, rate, and sort articles from configurable sources, with Redis caching, OpenRouter-based scoring, and OpenTelemetry observability."
+href = "https://github.com/MehdiBenfredj/daily_newsletter.git"
+tag = "active"
+
+[[projects]]
 name = "Tailor"
 year = "2026"
 desc = "Paste a LinkedIn job URL — title and employer fill automatically, then your resume is scored and tailored."
-href = "https://tailor.mehdibenfredj.com"
-tag = "active"
+href = "https://github.com/MehdiBenfredj/tailor.git"
+tag = "shipped"
 
 [[projects]]
 name = "DiskVu"
 year = "2026"
 desc = "A fast, interactive TUI disk analyzer for the terminal — inspired by DaisyDisk, built for the command line. Works on macOS, Linux, and headless EC2/SSH sessions."
 href = "https://github.com/MehdiBenfredj/DiskVu"
-tag = "shipped"
+tag = "active"
 
 [[projects]]
 name = "Enroln Email"
